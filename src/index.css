@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 @theme {
   /* Velocrafts Technologies Color Palette */
@@ -8,13 +9,12 @@
   --color-accent-hover: #e6a200;
   
   /* Typography */
-  --font-sans: 'Poppins', system-ui, sans-serif;
+  --font-sans: "Poppins", system-ui, sans-serif;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 html {
   scroll-behavior: smooth;
+  font-size: 18px; /* +2px from default 16px */
 }
 
 body {
@@ -22,4 +22,134 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scroll-triggered animations - subtle, professional (Apple/Stripe-style) */
+.scroll-animate {
+  opacity: 0;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.scroll-animate--visible.scroll-animate--fade-in-up {
+  animation-name: scrollFadeUp;
+}
+.scroll-animate--visible.scroll-animate--fade-in {
+  animation-name: scrollFadeIn;
+}
+.scroll-animate--visible.scroll-animate--slide-in-left {
+  animation-name: scrollSlideLeft;
+}
+.scroll-animate--visible.scroll-animate--slide-in-right {
+  animation-name: scrollSlideRight;
+}
+.scroll-animate--visible.scroll-animate--scale-up {
+  animation-name: scrollScaleUp;
+}
+.scroll-animate--visible.scroll-animate--zoom-in {
+  animation-name: scrollZoomIn;
+}
+.scroll-animate--visible.scroll-animate--fade-up-subtle {
+  animation-name: scrollFadeUpSubtle;
+}
+
+/* Gentle fade + 12px up - for headings */
+@keyframes scrollFadeUpSubtle {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade + 20px up - for text blocks */
+@keyframes scrollFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scrollFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Cards slide from left - 24px */
+@keyframes scrollSlideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Cards slide from right - 24px */
+@keyframes scrollSlideRight {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Subtle scale + fade - premium card feel */
+@keyframes scrollScaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Zoom in - for impact sections */
+@keyframes scrollZoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-animate,
+  .scroll-animate--visible {
+    opacity: 1;
+    animation: none;
+    transform: none;
+  }
+}
+
+/* Thin scrollbar for card overflow */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 4px;
+}
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
 }

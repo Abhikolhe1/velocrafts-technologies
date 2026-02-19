@@ -1,16 +1,19 @@
 import { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 
 const navLinks = [
-  { href: '#home', label: 'Home' },
-  { href: '#services', label: 'Services' },
-  { href: '#portfolio', label: 'Portfolio' },
-  { href: '#about', label: 'About Us' },
-  { href: '#careers', label: 'Careers' },
-  { href: '#contact', label: 'Contact' },
+  { to: '/', label: 'Home' },
+  { to: '/portfolio', label: 'Portfolio' },
+  { to: '/about', label: 'About Us' },
+  { to: '/careers', label: 'Careers' },
+  { to: '/contact', label: 'Contact' },
 ];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+
+  const linkClass = ({ isActive }) =>
+    `text-sm font-medium transition-colors duration-200 ${isActive ? 'text-accent' : 'text-white/90 hover:text-accent'}`;
 
   return (
     <nav
@@ -20,33 +23,31 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <a href="#home" className="flex items-center gap-2" aria-label="Velocrafts Technologies Home">
+          <Link to="/" className="flex items-center gap-2" aria-label="Velocrafts Technologies Home">
             <span className="text-xl md:text-2xl font-bold text-white">
               Velocrafts<span className="text-accent">.</span>
             </span>
-          </a>
+          </Link>
 
-          {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-white/90 hover:text-accent transition-colors duration-200 text-sm font-medium"
+              <NavLink
+                key={link.to}
+                to={link.to}
+                className={linkClass}
+                end={link.to === '/'}
               >
                 {link.label}
-              </a>
+              </NavLink>
             ))}
-            <a
-              href="#contact"
-              className="bg-accent text-primary font-semibold px-5 py-2.5 rounded-lg hover:bg-accent-hover transition-all duration-200 hover:scale-105"
+            <Link
+              to="/contact"
+              className="bg-accent text-primary font-semibold px-5 py-2.5 rounded-lg hover:bg-[#e6a200] transition-all duration-200 hover:scale-105"
             >
               Request Quote
-            </a>
+            </Link>
           </div>
 
-          {/* Mobile menu button */}
           <button
             type="button"
             className="md:hidden p-2 rounded-lg text-white hover:bg-white/10"
@@ -64,29 +65,28 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Mobile Menu */}
         <div
           id="mobile-menu"
           className={`md:hidden overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-96 pb-4' : 'max-h-0'}`}
         >
           <div className="flex flex-col gap-4 pt-4">
             {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
+              <Link
+                key={link.to}
+                to={link.to}
                 className="text-white/90 hover:text-accent py-2"
                 onClick={() => setIsOpen(false)}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
-            <a
-              href="#contact"
+            <Link
+              to="/contact"
               className="bg-accent text-primary font-semibold px-5 py-3 rounded-lg text-center mt-2"
               onClick={() => setIsOpen(false)}
             >
               Request Quote
-            </a>
+            </Link>
           </div>
         </div>
       </div>
