@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  /* Velocrafts Technologies Color Palette */
+  --color-primary: #153A5B;
+  --color-secondary: #0F576F;
+  --color-accent: #FFB400;
+  --color-accent-hover: #e6a200;
+  
+  /* Typography */
+  --font-sans: 'Poppins', system-ui, sans-serif;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
