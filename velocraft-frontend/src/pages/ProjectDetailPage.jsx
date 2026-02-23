@@ -20,18 +20,20 @@ export default function ProjectDetailPage() {
       {/* Section 1: Hero */}
       <section className="pt-32 pb-12 bg-primary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link
-            to="/portfolio"
-            className="inline-flex items-center text-white/90 hover:text-white mb-6 text-sm font-medium"
-          >
-            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to Portfolio
-          </Link>
-          <span className="inline-block text-accent font-semibold uppercase tracking-wider text-sm mb-4">
-            {project.category}
-          </span>
+          <div className="flex flex-wrap items-center gap-4 mb-6">
+            <Link
+              to="/portfolio"
+              className="inline-flex items-center text-white/90 hover:text-white text-sm font-medium"
+            >
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              Back to Portfolio
+            </Link>
+            <span className="inline-block text-accent font-semibold uppercase tracking-wider text-sm">
+              {project.category}
+            </span>
+          </div>
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">{project.title}</h1>
           <p className="text-white/90 text-lg max-w-2xl mb-6">{project.shortDescription}</p>
           <div className="flex flex-wrap gap-4 text-white/80 text-sm">
