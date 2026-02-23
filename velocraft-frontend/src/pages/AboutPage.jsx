@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { teamMembers } from '../data/team';
+// import { teamMembers } from '../data/team'; // Used in Our Team section (commented)
 import AnimateOnScroll from '../components/AnimateOnScroll';
 import AnimateStagger from '../components/AnimateStagger';
 
@@ -100,7 +100,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Team Section */}
+      {/* Team Section - commented out
       <section className="py-20 md:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimateOnScroll animation="slide-in-up" delay={0.3}>
@@ -135,6 +135,7 @@ export default function AboutPage() {
           </AnimateStagger>
         </div>
       </section>
+      */}
 
       {/* Stats Section */}
       <section className="py-20 md:py-28 bg-white">

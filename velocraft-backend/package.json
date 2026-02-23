@@ -27,10 +27,15 @@
     "test:dev": "lb-mocha --allow-console-logs dist/__tests__/**/*.js && npm run posttest",
     "preopenapi-spec": "npm run build",
     "openapi-spec": "node ./dist/openapi-spec",
+    "create-db": "node scripts/create-db.js",
+    "premigrate": "npm run create-db && npm run build",
+    "migrate": "node ./dist/migrate",
     "prestart": "npm run rebuild",
     "start": "node -r source-map-support/register .",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
-    "rebuild": "npm run clean && npm run build"
+    "rebuild": "npm run clean && npm run build",
+    "seed:blog": "node scripts/seed-blog-posts.js",
+    "test:db": "node scripts/test-db-connection.js"
   },
   "repository": {
     "type": "git",
@@ -49,6 +54,9 @@
     "@loopback/core": "^4.0.10",
     "@loopback/rest": "^12.0.10",
     "@loopback/rest-explorer": "^5.0.10",
+    "@loopback/repository": "^5.1.5",
+    "loopback-connector-mysql": "^6.1.0",
+    "dotenv": "^16.3.1",
     "tslib": "^2.0.0"
   },
   "devDependencies": {

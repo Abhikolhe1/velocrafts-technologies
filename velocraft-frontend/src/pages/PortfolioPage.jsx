@@ -5,10 +5,9 @@ import AnimateOnScroll from '../components/AnimateOnScroll';
 import AnimateStagger from '../components/AnimateStagger';
 import { projects } from '../data/projects';
 
-const categories = ['All', 'Web App', 'Mobile', 'AI/ML', 'E-commerce', 'SaaS'];
-
 export default function PortfolioPage() {
   const [activeCategory, setActiveCategory] = useState('All');
+  const categories = ['All', ...new Set(projects.map((project) => project.category))];
 
   const filteredProjects =
     activeCategory === 'All'
@@ -46,7 +45,7 @@ export default function PortfolioPage() {
             ))}
           </AnimateOnScroll>
 
-          <AnimateStagger animation="fade-in-up" className="grid md:grid-cols-2 lg:grid-cols-3 gap-10" staggerDelay={0.2}>
+          <AnimateStagger key={activeCategory} animation="fade-in-up" className="grid md:grid-cols-2 lg:grid-cols-3 gap-10" staggerDelay={0.2}>
             {filteredProjects.map((project) => (
               <PortfolioCard
                 key={project.id}
@@ -55,6 +54,7 @@ export default function PortfolioPage() {
                 description={project.shortDescription}
                 technologies={project.technologies}
                 category={project.category}
+                image={project.image}
               />
             ))}
           </AnimateStagger>

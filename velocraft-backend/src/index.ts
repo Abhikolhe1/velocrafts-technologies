@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import {ApplicationConfig, VelocraftsApplication} from './application';
 
 export * from './application';

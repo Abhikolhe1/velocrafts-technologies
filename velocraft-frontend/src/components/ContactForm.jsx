@@ -1,4 +1,7 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import TurnstileWidget from './TurnstileWidget';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 const serviceOptions = [
   'Web App Development',
@@ -18,17 +21,52 @@ export default function ContactForm() {
     service: '',
     message: '',
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [turnstileKey, setTurnstileKey] = useState(0);
+  const turnstileTokenRef = useRef(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleTurnstileVerify = (token) => {
+    turnstileTokenRef.current = token;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // In production, would submit to API
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message! We will get back to you soon.');
-    setFormData({ name: '', email: '', company: '', service: '', message: '' });
+    if (!turnstileTokenRef.current) {
+      setError('Please complete the verification below.');
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`${API_URL}/contacts`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          company: formData.company || undefined,
+          service: formData.service || undefined,
+          message: formData.message,
+          turnstileToken: turnstileTokenRef.current,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error?.message || data.message || 'Failed to submit');
+      alert(data.message || 'Thank you for your message! We will get back to you soon.');
+      setFormData({ name: '', email: '', company: '', service: '', message: '' });
+      turnstileTokenRef.current = null;
+      setTurnstileKey((k) => k + 1); // Reset Turnstile for next submit
+    } catch (err) {
+      const msg = err.message || 'Something went wrong. Please try again.';
+      setError(err.name === 'TypeError' && err.message?.includes('fetch') ? 'Cannot reach server. Is the backend running?' : msg);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const inputClass = "w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-[#FFB400] focus:ring-2 focus:ring-[#FFB400]/20 outline-none transition-all";
@@ -36,6 +74,9 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {error && (
+        <div className="p-3 rounded-lg bg-red-100 text-red-700 text-sm">{error}</div>
+      )}
       <div>
         <label htmlFor="name" className={labelClass}>Name *</label>
         <input
@@ -106,11 +147,13 @@ export default function ContactForm() {
           aria-required="true"
         />
       </div>
+      <TurnstileWidget key={turnstileKey} onVerify={handleTurnstileVerify} />
       <button
         type="submit"
-        className="w-full bg-[#FFB400] text-[#153A5B] font-semibold py-4 rounded-lg hover:opacity-90 transition-opacity"
+        disabled={loading}
+        className="w-full bg-[#FFB400] text-[#153A5B] font-semibold py-4 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-70 disabled:cursor-not-allowed"
       >
-        Submit
+        {loading ? 'Sending...' : 'Submit'}
       </button>
     </form>
   );

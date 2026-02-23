@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { Children, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 
 /**
@@ -28,17 +28,6 @@ const cardVariants = {
   },
 };
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.28,
-      delayChildren: 0.35,
-    },
-  },
-};
-
 export default function AnimateStagger({
   children,
   animation = 'fade-in-up',
@@ -48,7 +37,7 @@ export default function AnimateStagger({
 }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: threshold });
-  const childArray = Array.isArray(children) ? children : [children];
+  const childArray = Children.toArray(children);
   const itemVariant = cardVariants[animation] || cardVariants['fade-in-up'];
 
   return (
@@ -58,10 +47,11 @@ export default function AnimateStagger({
       initial="hidden"
       animate={isInView ? 'visible' : 'hidden'}
       variants={{
+        hidden: {},
         visible: {
           transition: {
             staggerChildren: staggerDelay,
-            delayChildren: 0.4,
+            delayChildren: 0.2,
           },
         },
       }}

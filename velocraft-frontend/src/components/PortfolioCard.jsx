@@ -1,17 +1,21 @@
 import { Link } from 'react-router-dom';
 
-export default function PortfolioCard({ id, title, description, technologies, category }) {
+export default function PortfolioCard({ id, title, description, technologies, category, image }) {
   return (
     <article
       className="group relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col p-6"
       style={{ height: '520px' }}
     >
       <div className="aspect-video flex-shrink-0 bg-gradient-to-br from-primary to-secondary overflow-hidden rounded-lg">
-        <div className="w-full h-full flex items-center justify-center text-white/20 group-hover:text-white/40 transition-colors">
-          <svg className="w-24 h-24" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
-          </svg>
-        </div>
+        {image ? (
+          <img src={image} alt={title} className="w-full h-full object-cover" />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-white/20 group-hover:text-white/40 transition-colors">
+            <svg className="w-24 h-24" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
+            </svg>
+          </div>
+        )}
       </div>
       <div className="p-8 flex flex-col flex-1 min-h-0">
         <span className="text-xs font-semibold text-accent uppercase tracking-wider flex-shrink-0">{category}</span>

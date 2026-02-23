@@ -2,6 +2,30 @@
 
 LoopBack 4 REST API backend for Velocrafts Technologies. Generated with [LoopBack 4 CLI](https://loopback.io/doc/en/lb4/Command-line-interface.html).
 
+## Database Setup (MySQL / PHPMyAdmin)
+
+1. Create the database in PHPMyAdmin (e.g. `velocraft`)
+2. Copy `.env.example` to `.env` and set your MySQL credentials:
+
+```
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=velocraft
+```
+
+3. Run migration to create tables:
+
+```bash
+npm run migrate
+```
+
+- `npm run migrate` - Creates/updates tables (preserves data)
+- `npm run migrate -- --rebuild` - Drops and recreates tables (**deletes all data**)
+
+Alternatively, you can create the `contacts` table manually using `database/create_contacts.sql` in PHPMyAdmin.
+
 ## Install dependencies
 
 By default, dependencies were installed when this application was generated.

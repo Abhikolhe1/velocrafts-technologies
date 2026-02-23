@@ -4,13 +4,16 @@ import {
   RestExplorerBindings,
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
+import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import path from 'path';
 import {MySequence} from './sequence';
 
 export {ApplicationConfig};
 
-export class VelocraftsApplication extends BootMixin(RestApplication) {
+export class VelocraftsApplication extends BootMixin(
+  RepositoryMixin(RestApplication),
+) {
   constructor(options: ApplicationConfig = {}) {
     super(options);
 
@@ -30,9 +33,23 @@ export class VelocraftsApplication extends BootMixin(RestApplication) {
     // Customize @loopback/boot Booter Conventions here
     this.bootOptions = {
       controllers: {
-        // Customize ControllerBooter Conventions here
         dirs: ['controllers'],
         extensions: ['.controller.js'],
+        nested: true,
+      },
+      datasources: {
+        dirs: ['datasources'],
+        extensions: ['.datasource.js'],
+        nested: true,
+      },
+      models: {
+        dirs: ['models'],
+        extensions: ['.model.js'],
+        nested: true,
+      },
+      repositories: {
+        dirs: ['repositories'],
+        extensions: ['.repository.js'],
         nested: true,
       },
     };

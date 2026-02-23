@@ -54,11 +54,32 @@ export default function ProjectDetailPage() {
         </div>
       </section>
 
+      {project.image && (
+        <section className="bg-gray-100">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+            <img src={project.image} alt={project.title} className="w-full rounded-xl shadow-lg object-cover max-h-[480px]" />
+          </div>
+        </section>
+      )}
+
       {/* Section 2: Project Overview */}
       <section className="py-20 md:py-28 bg-white">
         <AnimateOnScroll animation="fade-in-up" delay={0.4} className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl md:text-3xl font-bold text-primary mb-6">Project Overview</h2>
           <p className="text-gray-600 text-lg leading-relaxed">{project.description}</p>
+          {project.keyFeatures && (
+            <div className="mt-10">
+              <h3 className="text-xl font-semibold text-primary mb-4">Key Features</h3>
+              <ul className="grid sm:grid-cols-2 gap-3">
+                {project.keyFeatures.map((feature, i) => (
+                  <li key={i} className="flex items-start gap-3 text-gray-600">
+                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-accent/20 flex items-center justify-center text-accent text-xs mt-0.5">✓</span>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </AnimateOnScroll>
       </section>
 
