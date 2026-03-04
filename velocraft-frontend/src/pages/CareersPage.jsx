@@ -4,7 +4,7 @@ export default function CareersPage() {
   return (
     <>
       <section className="pt-32 pb-20 bg-primary">
-        <AnimateOnScroll animation="fade-in" delay={0.2} threshold={0.01} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AnimateOnScroll animation="blur-in" delay={0.2} threshold={0.01} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Join Our Team</h1>
             <p className="text-white/90 text-lg md:text-xl max-w-2xl mx-auto">
@@ -15,7 +15,7 @@ export default function CareersPage() {
       </section>
 
       <section className="py-20 md:py-28 bg-white">
-        <AnimateOnScroll animation="fade-in-up" delay={0.4} className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <AnimateOnScroll animation="slide-in-right" delay={0.4} className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl font-bold text-primary mb-6">Why Velocrafts?</h2>
           <p className="text-gray-600 text-lg leading-relaxed mb-12">
             Join a team that values innovation, quality, and growth. We offer competitive benefits, 

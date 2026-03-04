@@ -17,7 +17,7 @@ export default function PortfolioPage() {
   return (
     <>
       <section className="pt-32 pb-12 bg-primary">
-        <AnimateOnScroll animation="fade-in" delay={0.2} threshold={0.01} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AnimateOnScroll animation="blur-in" delay={0.2} threshold={0.01} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Portfolio & Case Studies</h1>
             <p className="text-white/90 text-lg max-w-2xl mx-auto">
@@ -29,7 +29,7 @@ export default function PortfolioPage() {
 
       <section className="pt-12 pb-8 md:pt-16 md:pb-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimateOnScroll animation="fade-in-down" delay={0.3} className="flex flex-wrap justify-center gap-2 mb-12">
+          <AnimateOnScroll animation="slide-in-left" delay={0.3} className="flex flex-wrap justify-center gap-2 mb-12">
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -45,7 +45,7 @@ export default function PortfolioPage() {
             ))}
           </AnimateOnScroll>
 
-          <AnimateStagger key={activeCategory} animation="fade-in-up" className="grid md:grid-cols-2 lg:grid-cols-3 gap-10" staggerDelay={0.2}>
+          <AnimateStagger key={activeCategory} animation="lift-in" className="grid md:grid-cols-2 lg:grid-cols-3 gap-10" staggerDelay={0.2}>
             {filteredProjects.map((project) => (
               <PortfolioCard
                 key={project.id}

@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {belongsTo, Entity, model, property} from '@loopback/repository';
+import {Media, MediaWithRelations} from './media.model';
 
 export interface BlogSection {
   heading: string;
@@ -59,6 +60,19 @@ export class BlogPost extends Entity {
     type: 'string',
   })
   featuredImage?: string;
+
+  @belongsTo(
+    () => Media,
+    {name: 'featuredMedia'},
+    {
+      required: false,
+      mysql: {
+        dataType: 'varchar',
+        dataLength: 36,
+      },
+    },
+  )
+  featuredMediaId?: string;
 
   @property({
     type: 'string',
@@ -127,3 +141,9 @@ export class BlogPost extends Entity {
     super(data);
   }
 }
+
+export interface BlogPostRelations {
+  featuredMedia?: MediaWithRelations;
+}
+
+export type BlogPostWithRelations = BlogPost & BlogPostRelations;

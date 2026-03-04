@@ -2,7 +2,6 @@ import { useParams, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import AnimateOnScroll from '../components/AnimateOnScroll';
 import AnimateStagger from '../components/AnimateStagger';
-import { getBlogPost, getRelatedPosts } from '../data/blogPosts';
 import { fetchBlogPostBySlug, fetchBlogPosts } from '../services/blogApi';
 import BlogCard from '../components/BlogCard';
 
@@ -16,27 +15,24 @@ function getRelatedFromList(posts, slug, limit = 3) {
 
 export default function BlogPostPage() {
   const { slug } = useParams();
-  const [post, setPost] = useState(() => getBlogPost(slug));
-  const [relatedPosts, setRelatedPosts] = useState(() => getRelatedPosts(slug, 3));
-  const [loading, setLoading] = useState(!!import.meta.env.VITE_API_URL);
+  const [post, setPost] = useState(null);
+  const [relatedPosts, setRelatedPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
+      setLoading(true);
       const fromApi = await fetchBlogPostBySlug(slug);
       if (cancelled) return;
+      setPost(fromApi ?? null);
       if (fromApi) {
-        setPost(fromApi);
         const list = await fetchBlogPosts({});
-        if (list) {
-          setRelatedPosts(getRelatedFromList(list, slug, 3));
-        } else {
-          setRelatedPosts(getRelatedPosts(slug, 3));
-        }
+        if (list) setRelatedPosts(getRelatedFromList(list, slug, 3));
+        else setRelatedPosts([]);
       } else {
-        setPost(getBlogPost(slug));
-        setRelatedPosts(getRelatedPosts(slug, 3));
+        setRelatedPosts([]);
       }
       setLoading(false);
     })();
@@ -74,7 +70,6 @@ export default function BlogPostPage() {
 
   const handleShare = async (platform) => {
     const url = window.location.href;
-    const title = encodeURIComponent(post.title);
     const text = encodeURIComponent(post.excerpt || post.title);
 
     if (platform === 'copy') {
@@ -96,7 +91,7 @@ export default function BlogPostPage() {
     <>
       {/* Hero / Header */}
       <section className="pt-32 pb-12 bg-primary">
-        <AnimateOnScroll animation="fade-in" delay={0.2} threshold={0.01} className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AnimateOnScroll animation="blur-in" delay={0.2} threshold={0.01} className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link to="/blog" className="inline-flex items-center text-white/80 hover:text-white text-sm mb-6 transition-colors">
             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -143,7 +138,7 @@ export default function BlogPostPage() {
             {/* Sidebar: Table of Contents (sticky on desktop) */}
             {sections.length > 0 && (
               <aside className="lg:w-64 flex-shrink-0 order-2 lg:order-1">
-                <AnimateOnScroll animation="fade-in-down" delay={0.3} className="lg:sticky lg:top-28">
+                <AnimateOnScroll animation="slide-in-right" delay={0.3} className="lg:sticky lg:top-28">
                   <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
                     <h3 className="text-sm font-semibold text-primary uppercase tracking-wider mb-4">In this article</h3>
                     <nav className="space-y-2" aria-label="Table of contents">
@@ -164,12 +159,18 @@ export default function BlogPostPage() {
 
             {/* Main content */}
             <div className="flex-1 min-w-0 order-1 lg:order-2">
-              <AnimateOnScroll animation="fade-in-up" delay={0.3} className="prose prose-lg max-w-none">
-                <div className="aspect-video bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl mb-10 flex items-center justify-center">
-                  <svg className="w-20 h-20 text-primary/30" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z" />
-                  </svg>
-                </div>
+              <AnimateOnScroll animation="lift-in" delay={0.3} className="prose prose-lg max-w-none">
+                {post.featuredImage ? (
+                  <div className="aspect-video rounded-xl mb-10 overflow-hidden bg-gray-100">
+                    <img src={post.featuredImage} alt={post.title} className="w-full h-full object-cover" />
+                  </div>
+                ) : (
+                  <div className="aspect-video bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl mb-10 flex items-center justify-center">
+                    <svg className="w-20 h-20 text-primary/30" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z" />
+                    </svg>
+                  </div>
+                )}
 
                 <p className="text-lg text-gray-600 leading-relaxed mb-10">{post.content.intro}</p>
 
@@ -267,7 +268,7 @@ export default function BlogPostPage() {
                 </div>
               </AnimateOnScroll>
 
-              <AnimateOnScroll animation="fade-in" delay={0.4} className="mt-12 pt-8 border-t border-gray-200">
+              <AnimateOnScroll animation="slide-in-left" delay={0.4} className="mt-12 pt-8 border-t border-gray-200">
                 <Link to="/blog" className="inline-flex items-center text-accent font-medium hover:underline">
                   ← Back to Blog
                 </Link>
@@ -278,10 +279,10 @@ export default function BlogPostPage() {
           {/* Related posts */}
           {relatedPosts?.length > 0 && (
             <section className="mt-20 pt-16 border-t border-gray-200">
-              <AnimateOnScroll animation="fade-in-up" delay={0.2}>
+              <AnimateOnScroll animation="slide-in-up" delay={0.2}>
                 <h2 className="text-2xl md:text-3xl font-bold text-primary mb-8">Related articles</h2>
                 <AnimateStagger
-                  animation="fade-in-up"
+                  animation="soft-zoom"
                   className="grid md:grid-cols-3 gap-8"
                   staggerDelay={0.15}
                 >
@@ -290,6 +291,7 @@ export default function BlogPostPage() {
                       key={p.id}
                       title={p.title}
                       excerpt={p.excerpt}
+                      featuredImage={p.featuredImage}
                       category={p.category}
                       author={p.author}
                       date={p.date}

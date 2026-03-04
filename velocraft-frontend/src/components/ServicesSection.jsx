@@ -53,7 +53,7 @@ export default function ServicesSection() {
   return (
     <section id="services" className="py-20 md:py-28 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AnimateOnScroll animation="fade-in-up" delay={0.4} className="text-center mb-16">
+        <AnimateOnScroll animation="blur-in" delay={0.4} className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Our Services</h2>
           <p className="text-gray-600 max-w-2xl mx-auto text-lg">
             End-to-end digital solutions that transform your business and scale with your growth.
@@ -61,7 +61,7 @@ export default function ServicesSection() {
         </AnimateOnScroll>
 
         <AnimateStagger
-          animation="fade-in-up"
+          animation="lift-in"
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8"
           staggerDelay={0.2}
         >

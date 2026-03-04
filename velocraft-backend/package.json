@@ -35,7 +35,8 @@
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache",
     "rebuild": "npm run clean && npm run build",
     "seed:blog": "node scripts/seed-blog-posts.js",
-    "test:db": "node scripts/test-db-connection.js"
+    "test:db": "node scripts/test-db-connection.js",
+    "create:blog-table": "node scripts/create-blog-posts-table.js"
   },
   "repository": {
     "type": "git",

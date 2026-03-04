@@ -96,6 +96,7 @@ export class BlogPostController {
   async findBySlug(@param.path.string('slug') slug: string): Promise<BlogPost | null> {
     const found = await this.blogPostRepository.findOne({
       where: {slug, published: true},
+      include: [{relation: 'featuredMedia'}],
     });
     return found ?? null;
   }

@@ -66,7 +66,7 @@ export default function ProjectDetailPage() {
 
       {/* Section 2: Project Overview */}
       <section className="py-20 md:py-28 bg-white">
-        <AnimateOnScroll animation="fade-in-up" delay={0.4} className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AnimateOnScroll animation="slide-in-right" delay={0.4} className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl md:text-3xl font-bold text-primary mb-6">Project Overview</h2>
           <p className="text-gray-600 text-lg leading-relaxed">{project.description}</p>
           {project.keyFeatures && (
@@ -87,7 +87,7 @@ export default function ProjectDetailPage() {
 
       {/* Section 3: The Challenge & Our Approach */}
       <section className="py-20 md:py-28 bg-gray-50">
-        <AnimateOnScroll animation="fade-in-down" delay={0.3} className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AnimateOnScroll animation="slide-in-left" delay={0.3} className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-1 gap-16">
             <div>
               <h2 className="text-2xl md:text-3xl font-bold text-primary mb-6">The Challenge</h2>
@@ -103,7 +103,7 @@ export default function ProjectDetailPage() {
 
       {/* Section 4: Key Results & Tech Stack */}
       <section className="py-20 md:py-28 bg-white">
-        <AnimateOnScroll animation="slide-in-up" delay={0.4} className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AnimateOnScroll animation="slide-in-up" delay={0.3} threshold={0.01} className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 mb-16">
             <div>
               <h2 className="text-2xl font-bold text-primary mb-6">Key Results</h2>

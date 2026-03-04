@@ -44,13 +44,13 @@ export default function WhyChooseUs() {
   return (
     <section className="py-20 md:py-28 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AnimateOnScroll animation="fade-in-down" delay={0.4} className="text-center mb-16">
+        <AnimateOnScroll animation="slide-in-right" delay={0.4} className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Why Choose Us</h2>
           <p className="text-gray-600 max-w-2xl mx-auto text-lg">
             We combine technical excellence with a client-first approach. Here&apos;s what sets us apart.
           </p>
         </AnimateOnScroll>
-        <AnimateStagger animation="fade-in-up" className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8" staggerDelay={0.25}>
+        <AnimateStagger animation="soft-zoom" className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8" staggerDelay={0.25}>
           {features.map((item) => (
             <div
               key={item.title}

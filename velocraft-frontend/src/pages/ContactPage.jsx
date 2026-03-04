@@ -6,7 +6,7 @@ export default function ContactPage() {
     <>
       {/* Hero Section */}
       <section className="pt-32 pb-20 bg-primary">
-        <AnimateOnScroll animation="fade-in" delay={0.2} threshold={0.01} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AnimateOnScroll animation="blur-in" delay={0.2} threshold={0.01} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Contact Us</h1>
             <p className="text-white/90 text-lg md:text-xl max-w-2xl mx-auto">
@@ -18,7 +18,7 @@ export default function ContactPage() {
 
       {/* Contact Form & Info Section */}
       <section className="py-20 md:py-28 bg-gray-50">
-        <AnimateOnScroll animation="fade-in" delay={0.2} threshold={0.01} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AnimateOnScroll animation="slide-in-up" delay={0.2} threshold={0.01} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
             <div className="bg-white rounded-xl p-8 shadow-lg">
               <h2 className="text-2xl font-bold text-primary mb-6">Send us a message</h2>
@@ -67,7 +67,7 @@ export default function ContactPage() {
 
       {/* CTA Section */}
       <section className="py-16 bg-white">
-        <AnimateOnScroll animation="fade-in" delay={0.2} threshold={0.01} className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <AnimateOnScroll animation="soft-zoom" delay={0.2} threshold={0.01} className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl font-bold text-primary mb-4">Prefer to talk?</h2>
           <p className="text-gray-600 mb-6">
             Schedule a free consultation with our team to discuss your project.

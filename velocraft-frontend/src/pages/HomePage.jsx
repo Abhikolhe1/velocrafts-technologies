@@ -12,7 +12,7 @@ function AboutTeaser() {
   return (
     <section className="py-16 md:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AnimateOnScroll animation="fade-in-up" delay={0.5} className="grid lg:grid-cols-2 gap-12 items-center">
+        <AnimateOnScroll animation="slide-in-left" delay={0.5} className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">About Velocrafts</h2>
             <p className="text-gray-600 text-lg leading-relaxed mb-6">
@@ -30,7 +30,7 @@ function AboutTeaser() {
               </svg>
             </Link>
           </div>
-          <AnimateStagger animation="fade-in-down" className="grid grid-cols-2 gap-4" staggerDelay={0.25}>
+          <AnimateStagger animation="soft-zoom" className="grid grid-cols-2 gap-4" staggerDelay={0.25}>
             {[
               { value: '150+', label: 'Clients Served' },
               { value: '200+', label: 'Apps Built' },
@@ -52,7 +52,7 @@ function AboutTeaser() {
 function CTA() {
   return (
     <section className="py-14 md:py-20 bg-primary">
-      <AnimateOnScroll animation="fade-in" delay={0.2} threshold={0.01} className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <AnimateOnScroll animation="blur-in" delay={0.2} threshold={0.01} className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Start Your Project?</h2>
         <p className="text-white/90 text-lg mb-8">
           Get in touch with our team and let&apos;s turn your vision into reality.
@@ -84,7 +84,7 @@ export default function HomePage() {
       <WhyChooseUs />
       <HowWeWork />
       <AboutTeaser />
-      <PortfolioGrid showViewAll />
+      <PortfolioGrid showViewAll showFilters={false} maxItems={3} animateCards={false} headerAnimated={false} />
       <TestimonialSlider />
       <CTA />
     </>

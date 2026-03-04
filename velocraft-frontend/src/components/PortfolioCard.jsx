@@ -1,32 +1,44 @@
 import { Link } from 'react-router-dom';
 
-export default function PortfolioCard({ id, title, description, technologies, category, image }) {
+export default function PortfolioCard({
+  id,
+  title,
+  description,
+  technologies,
+  category,
+  image,
+  compact = false,
+}) {
   return (
     <article
-      className="group relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col p-6"
-      style={{ height: '520px' }}
+      className={`group relative bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col ${
+        compact ? 'p-5' : 'p-6'
+      }`}
+      style={{ height: compact ? '480px' : '520px' }}
     >
-      <div className="aspect-video flex-shrink-0 bg-gradient-to-br from-primary to-secondary overflow-hidden rounded-lg">
-        {image ? (
-          <img src={image} alt={title} className="w-full h-full object-cover" />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-white/20 group-hover:text-white/40 transition-colors">
-            <svg className="w-24 h-24" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
-            </svg>
-          </div>
-        )}
+      <div className="flex-shrink-0 p-2 bg-gray-50 rounded-xl">
+        <div className="aspect-video bg-gradient-to-br from-primary to-secondary overflow-hidden rounded-lg">
+          {image ? (
+            <img src={image} alt={title} className="w-full h-full object-contain p-2" />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-white/20 group-hover:text-white/40 transition-colors">
+              <svg className="w-24 h-24" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
+              </svg>
+            </div>
+          )}
+        </div>
       </div>
-      <div className="p-8 flex flex-col flex-1 min-h-0">
+      <div className={`flex flex-col flex-1 min-h-0 ${compact ? 'p-6' : 'p-8'}`}>
         <span className="text-xs font-semibold text-accent uppercase tracking-wider flex-shrink-0">{category}</span>
         <h3 className="text-xl font-semibold text-primary mt-2 mb-2 flex-shrink-0 line-clamp-2" title={title}>{title}</h3>
         <p
-          className="text-gray-600 text-sm mb-4 overflow-y-auto flex-1 min-h-0"
+          className={`text-gray-600 text-sm mb-4 flex-1 min-h-0 ${compact ? 'line-clamp-3 overflow-hidden' : 'overflow-y-auto'}`}
           title={description}
         >
           {description}
         </p>
-        <div className="flex flex-wrap gap-2 flex-shrink-0 overflow-y-auto max-h-14" title={technologies.join(', ')}>
+        <div className={`flex flex-wrap gap-2 flex-shrink-0 pr-1 ${compact ? 'overflow-y-auto max-h-12' : 'overflow-y-auto max-h-14'}`} title={technologies.join(', ')}>
           {technologies.map((tech) => (
             <span
               key={tech}
@@ -38,7 +50,7 @@ export default function PortfolioCard({ id, title, description, technologies, ca
         </div>
         <Link
           to={`/portfolio/${id}`}
-          className="mt-4 flex-shrink-0 inline-flex items-center text-accent font-medium hover:underline"
+          className="mt-auto pt-4 flex-shrink-0 inline-flex items-center text-accent font-medium hover:underline"
         >
           View Details
           <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">

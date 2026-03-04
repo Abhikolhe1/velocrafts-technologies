@@ -33,7 +33,7 @@ export default function AboutPage() {
     <>
       {/* Hero Section */}
       <section className="pt-32 pb-20 bg-primary">
-        <AnimateOnScroll animation="fade-in" delay={0.2} threshold={0.01} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AnimateOnScroll animation="blur-in" delay={0.2} threshold={0.01} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">About Velocrafts Technologies</h1>
             <p className="text-white/90 text-lg md:text-xl max-w-2xl mx-auto">
@@ -45,7 +45,7 @@ export default function AboutPage() {
 
       {/* Our Story Section */}
       <section className="py-20 md:py-28 bg-white">
-        <AnimateOnScroll animation="fade-in-up" delay={0.4} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AnimateOnScroll animation="slide-in-right" delay={0.4} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-8 text-center">Our Story</h2>
           <div className="max-w-3xl mx-auto space-y-6 text-gray-600 text-lg leading-relaxed">
             <p>
@@ -65,10 +65,10 @@ export default function AboutPage() {
       {/* Mission & Values Section */}
       <section className="py-20 md:py-28 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimateOnScroll animation="fade-in-down" delay={0.3}>
+          <AnimateOnScroll animation="slide-in-left" delay={0.3}>
             <h2 className="text-3xl md:text-4xl font-bold text-primary mb-12 text-center">Mission & Values</h2>
           </AnimateOnScroll>
-          <AnimateStagger animation="fade-in-up" className="grid md:grid-cols-3 gap-8" staggerDelay={0.2}>
+          <AnimateStagger animation="soft-zoom" className="grid md:grid-cols-3 gap-8" staggerDelay={0.2}>
             <div className="bg-white rounded-xl p-8 shadow-sm flex flex-col" style={{ height: '260px' }}>
               <div className="w-12 h-12 rounded-lg bg-accent/20 flex items-center justify-center mb-4 flex-shrink-0">
                 <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -139,9 +139,9 @@ export default function AboutPage() {
 
       {/* Stats Section */}
       <section className="py-20 md:py-28 bg-white">
-        <AnimateOnScroll animation="fade-in" delay={0.2} threshold={0.01} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AnimateOnScroll animation="mask-reveal" delay={0.2} threshold={0.01} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-12 text-center">Our Impact</h2>
-          <AnimateStagger animation="fade-in-down" className="grid grid-cols-2 md:grid-cols-4 gap-8" staggerDelay={0.22}>
+          <AnimateStagger animation="lift-in" className="grid grid-cols-2 md:grid-cols-4 gap-8" staggerDelay={0.22}>
             {metrics.map((m) => (
               <div key={m.label} className="text-center">
                 <div className="text-3xl md:text-4xl font-bold text-primary mb-2">

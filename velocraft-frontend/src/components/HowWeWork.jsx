@@ -13,13 +13,13 @@ export default function HowWeWork() {
   return (
     <section className="py-20 md:py-28 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AnimateOnScroll animation="slide-in-up" delay={0.4} className="text-center mb-16">
+        <AnimateOnScroll animation="blur-in" delay={0.3} threshold={0.01} className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">How We Work</h2>
           <p className="text-gray-600 max-w-2xl mx-auto text-lg">
             A proven process that brings your idea from concept to production—on time and on budget.
           </p>
         </AnimateOnScroll>
-        <AnimateStagger animation="slide-in-up" className="grid md:grid-cols-2 lg:grid-cols-4 gap-8" staggerDelay={0.2}>
+        <AnimateStagger animation="lift-in" className="grid md:grid-cols-2 lg:grid-cols-4 gap-8" staggerDelay={0.2}>
           {steps.map((step) => (
             <div key={step.number} className="relative">
               <div
@@ -41,7 +41,7 @@ export default function HowWeWork() {
             </div>
           ))}
         </AnimateStagger>
-        <AnimateOnScroll animation="fade-in" delay={0.2} className="text-center mt-12">
+        <AnimateOnScroll animation="slide-in-right" delay={0.2} className="text-center mt-12">
           <Link
             to="/contact"
             className="inline-flex items-center text-accent font-semibold hover:underline"

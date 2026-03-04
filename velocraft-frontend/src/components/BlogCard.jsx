@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-export default function BlogCard({ title, excerpt, category, author, date, slug }) {
+export default function BlogCard({ title, excerpt, category, author, date, slug, featuredImage }) {
   const formattedDate = new Date(date).toLocaleDateString('en-US', {
     month: 'long',
     day: 'numeric',
@@ -9,10 +9,14 @@ export default function BlogCard({ title, excerpt, category, author, date, slug 
 
   return (
     <article className="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-      <div className="aspect-video bg-gradient-to-br from-primary to-secondary flex items-center justify-center flex-shrink-0">
-        <svg className="w-16 h-16 text-white/30 group-hover:text-white/50 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z" />
-        </svg>
+      <div className="aspect-video bg-gradient-to-br from-primary to-secondary flex items-center justify-center flex-shrink-0 overflow-hidden">
+        {featuredImage ? (
+          <img src={featuredImage} alt={title} className="w-full h-full object-cover" />
+        ) : (
+          <svg className="w-16 h-16 text-white/30 group-hover:text-white/50 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z" />
+          </svg>
+        )}
       </div>
       <div className="p-6 flex flex-col flex-1">
         <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500 mb-3">
