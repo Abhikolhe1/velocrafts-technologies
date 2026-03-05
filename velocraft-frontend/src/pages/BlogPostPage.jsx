@@ -1,4 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
+import CtaButton from '../components/CtaButton';
 import { useState, useEffect } from 'react';
 import AnimateOnScroll from '../components/AnimateOnScroll';
 import AnimateStagger from '../components/AnimateStagger';
@@ -52,9 +53,9 @@ export default function BlogPostPage() {
       <section className="pt-32 pb-20 min-h-screen">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h1 className="text-2xl font-bold text-primary mb-4">Post not found</h1>
-          <Link to="/blog" className="text-accent hover:underline">
-            ← Back to Blog
-          </Link>
+          <CtaButton to="/blog" variant="primary">
+            Back to Blog
+          </CtaButton>
         </div>
       </section>
     );
@@ -92,12 +93,9 @@ export default function BlogPostPage() {
       {/* Hero / Header */}
       <section className="pt-32 pb-12 bg-primary">
         <AnimateOnScroll animation="blur-in" delay={0.2} threshold={0.01} className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link to="/blog" className="inline-flex items-center text-white/80 hover:text-white text-sm mb-6 transition-colors">
-            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
+          <CtaButton to="/blog" variant="primary" className="mb-6 !px-4 !py-2 text-sm">
             Back to Blog
-          </Link>
+          </CtaButton>
           <div className="flex flex-wrap items-center gap-2 text-sm text-white/80 mb-4">
             <span>{post.author}</span>
             <span aria-hidden="true">|</span>
@@ -259,19 +257,16 @@ export default function BlogPostPage() {
                   <p className="text-white/90 mb-4">
                     Get in touch with our team to discuss how we can help your business grow.
                   </p>
-                  <Link
-                    to="/contact"
-                    className="inline-block bg-accent text-primary font-semibold px-6 py-3 rounded-lg hover:opacity-90 transition-opacity"
-                  >
+                  <CtaButton to="/contact" variant="primary" compact>
                     Contact Us
-                  </Link>
+                  </CtaButton>
                 </div>
               </AnimateOnScroll>
 
               <AnimateOnScroll animation="slide-in-left" delay={0.4} className="mt-12 pt-8 border-t border-gray-200">
-                <Link to="/blog" className="inline-flex items-center text-accent font-medium hover:underline">
-                  ← Back to Blog
-                </Link>
+                <CtaButton to="/blog" variant="primary">
+                  Back to Blog
+                </CtaButton>
               </AnimateOnScroll>
             </div>
           </div>

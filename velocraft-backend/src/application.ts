@@ -8,8 +8,12 @@ import {RepositoryMixin} from '@loopback/repository';
 import {RestApplication} from '@loopback/rest';
 import path from 'path';
 import {MySequence} from './sequence';
-
+import {FILE_UPLOAD_SERVICE, STORAGE_DIRECTORY} from './keys';
+import {MediaService} from './services/media.service';
+import {logErrorMiddleware} from './middleware/log-error.middleware';
 export {ApplicationConfig};
+
+const STORAGE_PATH = path.resolve(__dirname, '../public/uploads');
 
 export class VelocraftsApplication extends BootMixin(
   RepositoryMixin(RestApplication),
@@ -17,11 +21,21 @@ export class VelocraftsApplication extends BootMixin(
   constructor(options: ApplicationConfig = {}) {
     super(options);
 
+    // File upload storage (used by media controller)
+    this.bind(STORAGE_DIRECTORY).to(STORAGE_PATH);
+    // Minimal no-op handler to satisfy FILE_UPLOAD_SERVICE injection.
+    // The media controller uses multer directly; this is only to avoid
+    // ResolutionError for 'services.file-upload'.
+    this.bind(FILE_UPLOAD_SERVICE).to((req, res, cb) => cb());
+    this.service(MediaService);
+
     // Set up the custom sequence
     this.sequence(MySequence);
+    // Log real error cause (e.g. unwrap AggregateError → ECONNREFUSED) for 500s
+    this.middleware(logErrorMiddleware);
 
-    // Set up default home page
-    this.static('/', path.join(__dirname, '../public'));
+    // Serve static files under /public so API routes (e.g. /portfolios) are not shadowed
+    this.static('/public', path.join(__dirname, '../public'));
 
     // Customize @loopback/rest-explorer configuration here
     this.configure(RestExplorerBindings.COMPONENT).to({

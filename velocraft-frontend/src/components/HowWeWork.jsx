@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
 import AnimateOnScroll from './AnimateOnScroll';
+import CtaButton from './CtaButton';
 import AnimateStagger from './AnimateStagger';
 
 const steps = [
@@ -42,15 +42,9 @@ export default function HowWeWork() {
           ))}
         </AnimateStagger>
         <AnimateOnScroll animation="slide-in-right" delay={0.2} className="text-center mt-12">
-          <Link
-            to="/contact"
-            className="inline-flex items-center text-accent font-semibold hover:underline"
-          >
+          <CtaButton to="/contact" variant="primary">
             Start your project
-            <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </Link>
+          </CtaButton>
         </AnimateOnScroll>
       </div>
     </section>

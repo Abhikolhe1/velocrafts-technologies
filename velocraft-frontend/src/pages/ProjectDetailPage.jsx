@@ -1,16 +1,47 @@
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getProjectById } from '../data/projects';
+import CtaButton from '../components/CtaButton';
+import { fetchProjectById } from '../services/portfolioApi';
 import AnimateOnScroll from '../components/AnimateOnScroll';
 
 export default function ProjectDetailPage() {
   const { id } = useParams();
-  const project = getProjectById(id);
+  const [project, setProject] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  if (!project) {
+  useEffect(() => {
+    setLoading(true);
+    setError(null);
+    setProject(null);
+    fetchProjectById(id)
+      .then((api) => {
+        if (api) {
+          setProject(api);
+          setError(null);
+        } else {
+          setProject(null);
+          setError('Failed to load project.');
+        }
+      })
+      .catch(() => setError('Failed to load project.'))
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  if (loading) {
     return (
       <section className="pt-32 pb-20 text-center">
-        <h1 className="text-2xl font-bold text-primary mb-4">Project Not Found</h1>
-        <Link to="/portfolio" className="text-accent hover:underline">Back to Portfolio</Link>
+        <p className="text-gray-500">Loading project…</p>
+      </section>
+    );
+  }
+  if (error || !project) {
+    return (
+      <section className="pt-32 pb-20 text-center">
+        <h1 className="text-2xl font-bold text-primary mb-4">{error || 'Project Not Found'}</h1>
+        <CtaButton to="/portfolio" variant="primary">
+          Back to Portfolio
+        </CtaButton>
       </section>
     );
   }
@@ -21,15 +52,9 @@ export default function ProjectDetailPage() {
       <section className="pt-32 pb-12 bg-primary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center gap-4 mb-6">
-            <Link
-              to="/portfolio"
-              className="inline-flex items-center text-white/90 hover:text-white text-sm font-medium"
-            >
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
+            <CtaButton to="/portfolio" variant="primary" className="!px-4 !py-2 text-sm">
               Back to Portfolio
-            </Link>
+            </CtaButton>
             <span className="inline-block text-accent font-semibold uppercase tracking-wider text-sm">
               {project.category}
             </span>
@@ -161,12 +186,9 @@ export default function ProjectDetailPage() {
           )}
 
           <div className="mt-12">
-            <Link
-              to="/contact"
-              className="inline-block bg-accent text-primary font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity"
-            >
+            <CtaButton to="/contact" variant="primary">
               Start a Similar Project
-            </Link>
+            </CtaButton>
           </div>
         </AnimateOnScroll>
       </section>

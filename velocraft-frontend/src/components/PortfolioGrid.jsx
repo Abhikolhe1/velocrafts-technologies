@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import CtaButton from './CtaButton';
 import { motion as Motion, useMotionValueEvent, useScroll } from 'framer-motion';
 import PortfolioCard from './PortfolioCard';
 import AnimateOnScroll from './AnimateOnScroll';
 import AnimateStagger from './AnimateStagger';
-import { projects } from '../data/projects';
+import { fetchPortfolios } from '../services/portfolioApi';
 
 const stickyCardVariants = {
   hidden: { opacity: 0, y: 36, scale: 0.96 },
@@ -64,11 +65,20 @@ export default function PortfolioGrid({
   animateCards = true,
   headerAnimated = true,
 }) {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('All');
   const [isDesktop, setIsDesktop] = useState(false);
   const [revealedCount, setRevealedCount] = useState(1);
-  const categories = ['All', ...new Set(projects.map((project) => project.category))];
 
+  useEffect(() => {
+    setLoading(true);
+    fetchPortfolios()
+      .then((api) => setProjects(Array.isArray(api) ? api : []))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const categories = ['All', ...new Set(projects.map((project) => project.category))];
   const filteredProjects =
     activeCategory === 'All'
       ? projects
@@ -80,7 +90,7 @@ export default function PortfolioGrid({
     return filteredProjects;
   })();
   const stickyProjects = displayProjects.slice(0, 3);
-  const shouldUseStickyReveal = stickyReveal && isDesktop && stickyProjects.length > 1;
+  const shouldUseStickyReveal = stickyReveal && isDesktop && stickyProjects.length > 1 && !loading;
   const stickyScrollRef = useRef(null);
   const handleCategoryChange = (category) => {
     setActiveCategory(category);
@@ -127,7 +137,11 @@ export default function PortfolioGrid({
 
   return (
     <section id="portfolio" className="py-16 md:py-20 bg-gray-50">
-      {shouldUseStickyReveal ? (
+      {loading ? (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center py-12 text-gray-500">Loading portfolio…</div>
+        </div>
+      ) : shouldUseStickyReveal ? (
         <div ref={stickyScrollRef} className="relative" style={{ height: stickyScrollHeight }}>
           <div className="sticky top-20 h-[calc(100vh-5rem)] py-6 md:py-8">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col">
@@ -186,7 +200,9 @@ export default function PortfolioGrid({
             animated={headerAnimated}
           />
 
-          {animateCards ? (
+          {displayProjects.length === 0 ? (
+            <div className="text-center py-12 text-gray-500">No projects to show.</div>
+          ) : animateCards ? (
             <AnimateStagger key={activeCategory} animation="soft-zoom" className="grid md:grid-cols-2 lg:grid-cols-3 gap-10" staggerDelay={0.2}>
               {displayProjects.map((project) => (
                 <PortfolioCard
@@ -221,15 +237,9 @@ export default function PortfolioGrid({
       {showViewAll && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimateOnScroll animation="slide-in-up" delay={0.2} className="text-center mt-12">
-            <Link
-              to="/portfolio"
-              className="inline-flex items-center text-accent font-semibold hover:underline"
-            >
+            <CtaButton to="/portfolio" variant="primary">
               View All Projects
-              <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
+            </CtaButton>
           </AnimateOnScroll>
         </div>
       )}

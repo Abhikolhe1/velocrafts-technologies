@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
+import CtaButton from '../components/CtaButton';
 import ServicesSection from '../components/ServicesSection';
 import WhyChooseUs from '../components/WhyChooseUs';
 import HowWeWork from '../components/HowWeWork';
@@ -20,15 +21,9 @@ function AboutTeaser() {
               Our mission is to transform ideas into scalable, high-performance applications 
               that drive growth and efficiency.
             </p>
-            <Link
-              to="/about"
-              className="inline-flex items-center text-accent font-semibold hover:underline"
-            >
+            <CtaButton to="/about" variant="primary">
               Learn more about us
-              <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
+            </CtaButton>
           </div>
           <AnimateStagger animation="soft-zoom" className="grid grid-cols-2 gap-4" staggerDelay={0.25}>
             {[
@@ -58,18 +53,12 @@ function CTA() {
           Get in touch with our team and let&apos;s turn your vision into reality.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link
-            to="/contact"
-            className="inline-block bg-accent text-primary font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity"
-          >
+          <CtaButton to="/contact" variant="primary">
             Request a Quote
-          </Link>
-          <Link
-            to="/portfolio"
-            className="inline-block border-2 border-white text-white font-semibold px-8 py-4 rounded-lg hover:bg-white/10 transition-colors"
-          >
+          </CtaButton>
+          <CtaButton to="/portfolio" variant="primary">
             View Portfolio
-          </Link>
+          </CtaButton>
         </div>
       </AnimateOnScroll>
     </section>

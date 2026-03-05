@@ -1,14 +1,38 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import CtaButton from '../components/CtaButton';
 import PortfolioCard from '../components/PortfolioCard';
 import AnimateOnScroll from '../components/AnimateOnScroll';
 import AnimateStagger from '../components/AnimateStagger';
-import { projects } from '../data/projects';
+import { fetchPortfolios } from '../services/portfolioApi';
 
 export default function PortfolioPage() {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [activeCategory, setActiveCategory] = useState('All');
-  const categories = ['All', ...new Set(projects.map((project) => project.category))];
 
+  useEffect(() => {
+    setLoading(true);
+    setError(null);
+    fetchPortfolios()
+      .then((api) => {
+        if (Array.isArray(api)) {
+          setProjects(api);
+          setError(null);
+        } else {
+          setError('Failed to load portfolio.');
+          setProjects([]);
+        }
+      })
+      .catch(() => {
+        setError('Failed to load portfolio.');
+        setProjects([]);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  const categories = ['All', ...new Set(projects.map((project) => project.category))];
   const filteredProjects =
     activeCategory === 'All'
       ? projects
@@ -45,34 +69,36 @@ export default function PortfolioPage() {
             ))}
           </AnimateOnScroll>
 
-          <AnimateStagger key={activeCategory} animation="lift-in" className="grid md:grid-cols-2 lg:grid-cols-3 gap-10" staggerDelay={0.2}>
-            {filteredProjects.map((project) => (
-              <PortfolioCard
-                key={project.id}
-                id={project.id}
-                title={project.title}
-                description={project.shortDescription}
-                technologies={project.technologies}
-                category={project.category}
-                image={project.image}
-              />
-            ))}
-          </AnimateStagger>
+          {loading ? (
+            <div className="text-center py-16 text-gray-500">Loading portfolio…</div>
+          ) : error ? (
+            <div className="text-center py-16 text-red-600">{error}</div>
+          ) : filteredProjects.length === 0 ? (
+            <div className="text-center py-16 text-gray-500">No projects to show.</div>
+          ) : (
+            <AnimateStagger key={activeCategory} animation="lift-in" className="grid md:grid-cols-2 lg:grid-cols-3 gap-10" staggerDelay={0.2}>
+              {filteredProjects.map((project) => (
+                <PortfolioCard
+                  key={project.id}
+                  id={project.id}
+                  title={project.title}
+                  description={project.shortDescription}
+                  technologies={project.technologies}
+                  category={project.category}
+                  image={project.image}
+                />
+              ))}
+            </AnimateStagger>
+          )}
         </div>
 
         <div className="mt-12 pt-12 border-t border-gray-200">
           <div className="text-center py-8 bg-white rounded-xl shadow-sm">
             <h3 className="text-xl font-semibold text-primary mb-2">Have a project in mind?</h3>
             <p className="text-gray-600 mb-4 max-w-xl mx-auto">Let&apos;s discuss how we can help bring your vision to life.</p>
-            <Link
-              to="/contact"
-              className="inline-flex items-center text-accent font-semibold hover:underline"
-            >
-              Get in touch
-              <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
+            <CtaButton to="/contact" variant="primary">
+              Request Quote
+            </CtaButton>
           </div>
         </div>
       </section>

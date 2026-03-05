@@ -1,291 +1,318 @@
 import {randomUUID} from 'crypto';
-import {promises as fsPromises, createWriteStream} from 'fs';
-import path from 'path';
-import {pipeline as pipelineCb, Transform} from 'stream';
-import {promisify} from 'util';
+import {inject} from '@loopback/core';
+import {repository} from '@loopback/repository';
 import {
-  Count,
-  CountSchema,
-  Filter,
-  FilterExcludingWhere,
-  repository,
-  Where,
-} from '@loopback/repository';
-import {
-  del,
   get,
-  getModelSchemaRef,
   HttpErrors,
+  oas,
   param,
-  patch,
   post,
   Request,
   requestBody,
+  Response,
+  RestBindings,
 } from '@loopback/rest';
-import {Media} from '../models/media.model';
-import {MediaRepository} from '../repositories/media.repository';
+import fs from 'fs';
+import path from 'path';
+import {promisify} from 'util';
+import {FILE_UPLOAD_SERVICE, FileUploadHandler, STORAGE_DIRECTORY} from '../keys';
+import * as mime from 'mime-types';
+import { MediaRepository } from '../repositories/media.repository';
 
-const pipeline = promisify(pipelineCb);
-const MEDIA_UPLOAD_DIR = path.resolve(__dirname, '../../public/uploads/media');
-const MAX_IMAGE_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
-const ALLOWED_IMAGE_MIME_TYPES = new Set([
-  'image/jpeg',
-  'image/jpg',
-  'image/png',
-  'image/webp',
-  'image/gif',
-  'image/svg+xml',
-]);
-const EXTENSION_TO_MIME_TYPE: Record<string, string> = {
-  '.jpg': 'image/jpeg',
-  '.jpeg': 'image/jpeg',
-  '.png': 'image/png',
-  '.webp': 'image/webp',
-  '.gif': 'image/gif',
-  '.svg': 'image/svg+xml',
-};
+const readdir = promisify(fs.readdir);
 
-const FILE_UPLOAD_REQUEST_BODY: any = {
-  required: true,
-  content: {
-    'application/octet-stream': {
-      schema: {
-        type: 'string',
-        format: 'binary',
-      },
-      'x-parser': 'stream',
-    },
-  },
-};
-
-function getExtensionFromMimeType(mimeType: string): string {
-  switch (mimeType) {
-    case 'image/jpeg':
-    case 'image/jpg':
-      return '.jpg';
-    case 'image/png':
-      return '.png';
-    case 'image/webp':
-      return '.webp';
-    case 'image/gif':
-      return '.gif';
-    case 'image/svg+xml':
-      return '.svg';
-    default:
-      return '';
-  }
+function getBaseUrl(): string {
+  const explicit = process.env.API_ENDPOINT;
+  if (explicit && explicit.trim().length > 0) return explicit.trim();
+  const host = process.env.HOST ?? '127.0.0.1';
+  const port = process.env.PORT ?? '3036';
+  return `http://${host}:${port}`;
 }
 
-function getMimeTypeFromExtension(extension: string): string | undefined {
-  return EXTENSION_TO_MIME_TYPE[extension.toLowerCase()];
-}
-
-function sanitizeBaseName(fileName: string): string {
-  const safe = fileName
-    .replace(/[^\w.-]+/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '');
-  return safe || 'media';
-}
-
-export class MediaController {
+/**
+ * A controller to handle file uploads using multipart/form-data media type
+ */
+export class FileUploadController {
   constructor(
+    @inject(FILE_UPLOAD_SERVICE) private handler: FileUploadHandler,
+    @inject(STORAGE_DIRECTORY) private storageDirectory: string,
     @repository(MediaRepository)
-    public mediaRepository: MediaRepository,
-  ) {}
+    private mediaRepository: MediaRepository
+  ) { }
 
-  @post('/media/upload', {
-    responses: {
-      '200': {
-        description: 'Uploaded media record',
-        content: {
-          'application/json': {
-            schema: getModelSchemaRef(Media, {includeRelations: true}),
-          },
-        },
-      },
-    },
-  })
-  async upload(
-    @requestBody(FILE_UPLOAD_REQUEST_BODY)
+  slugify(input: string): string {
+    return input
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, '-') // replace non-alphanumeric with hyphens
+      .replace(/-+/g, '-')         // remove multiple hyphens
+      .replace(/^-|-$/g, '');      // trim hyphens
+  }
+
+  private async uploadToFolder(
+    processId: string,
     request: Request,
-    @param.query.string('fileName') fileName?: string,
-  ): Promise<Media> {
-    const rawContentType = String(request.headers['content-type'] ?? '');
-    const fromHeader = String(request.headers['x-file-name'] ?? '').trim();
-    const originalName = (fileName ?? fromHeader ?? '').trim() || 'media';
-    const mimeType = rawContentType.split(';')[0].trim().toLowerCase();
-    const providedExt = path.extname(originalName).toLowerCase();
-    let resolvedMimeType = mimeType;
-    if (!ALLOWED_IMAGE_MIME_TYPES.has(resolvedMimeType)) {
-      // Swagger often sends octet-stream for binary uploads, so infer by extension.
-      if (resolvedMimeType === 'application/octet-stream') {
-        const inferred = getMimeTypeFromExtension(providedExt);
-        if (inferred) {
-          resolvedMimeType = inferred;
-        }
-      }
-    }
-    if (!ALLOWED_IMAGE_MIME_TYPES.has(resolvedMimeType)) {
-      throw new HttpErrors.BadRequest(
-        'Only image uploads are allowed (jpg, png, webp, gif, svg). If using Swagger binary upload, pass fileName with extension like hero.jpg.',
-      );
+    response: Response,
+  ): Promise<object> {
+    const slug = processId ? this.slugify(processId) : '';
+    const uploadDir = path.resolve(this.storageDirectory, slug);
+
+    if (!uploadDir.startsWith(this.storageDirectory)) {
+      throw new HttpErrors.BadRequest('Invalid folder path');
     }
 
-    const extension = providedExt || getExtensionFromMimeType(resolvedMimeType);
-    const baseName = sanitizeBaseName(path.basename(originalName, providedExt));
-    const storedName = `${Date.now()}-${baseName}-${randomUUID().slice(0, 8)}${extension}`;
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, {recursive: true});
+    }
 
-    await fsPromises.mkdir(MEDIA_UPLOAD_DIR, {recursive: true});
-    const absolutePath = path.join(MEDIA_UPLOAD_DIR, storedName);
-    const output = createWriteStream(absolutePath);
-    let size = 0;
-
-    const sizeGuard = new Transform({
-      transform(chunk, _enc, cb) {
-        size += chunk.length;
-        if (size > MAX_IMAGE_SIZE_BYTES) {
-          cb(new HttpErrors.BadRequest('Image exceeds 5MB limit.'));
-          return;
-        }
-        cb(null, chunk);
+    const multer = require('multer');
+    const storage = multer.diskStorage({
+      destination: uploadDir,
+      filename: (req: Request, file: Express.Multer.File, cb: Function) => {
+        const timestamp = new Date().toISOString().replace(/[-:.]/g, '');
+        cb(null, `${timestamp}_${file.originalname}`);
       },
     });
 
-    try {
-      await pipeline(request, sizeGuard, output);
-    } catch (error) {
-      await fsPromises.rm(absolutePath, {force: true});
-      throw error;
-    }
+    const handler = multer({storage}).any();
 
-    return this.mediaRepository.create({
-      id: randomUUID(),
-      fileOriginalName: originalName,
-      fileName: storedName,
-      fileUrl: `/uploads/media/${storedName}`,
-      fileLocation: absolutePath,
-      fileType: resolvedMimeType,
-      isUsed: false,
+    return new Promise<object>((resolve, reject) => {
+      handler(request, response, (err: unknown) => {
+        if (err) {
+          reject(new HttpErrors.InternalServerError('Upload failed'));
+        } else {
+          resolve(FileUploadController.getFilesAndFields(request, slug));
+        }
+      });
     });
   }
 
-  @post('/media', {
-    responses: {
-      '201': {
-        description: 'Media model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Media)}},
-      },
-    },
-  })
-  async create(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Media, {
-            title: 'NewMedia',
-            exclude: ['createdAt', 'updatedAt'],
-          }),
-        },
-      },
-    })
-    media: Omit<Media, 'createdAt' | 'updatedAt'>,
-  ): Promise<Media> {
-    if (!media.id) media.id = randomUUID();
-    return this.mediaRepository.create(media);
+  @post('/files/{processId}')
+  async uploadWithProcessId(
+    @param.path.string('processId') processId: string,
+    @requestBody.file() request: Request,
+    @inject(RestBindings.Http.RESPONSE) response: Response,
+  ): Promise<object> {
+    return this.uploadToFolder(processId, request, response);
   }
 
-  @get('/media/count', {
-    responses: {
-      '200': {
-        description: 'Media model count',
-        content: {'application/json': {schema: CountSchema}},
-      },
-    },
-  })
-  async count(@param.where(Media) where?: Where<Media>): Promise<Count> {
-    return this.mediaRepository.count(where);
+  @post('/files')
+  async uploadToRoot(
+    @requestBody.file() request: Request,
+    @inject(RestBindings.Http.RESPONSE) response: Response,
+  ): Promise<object> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result: any = await this.uploadToFolder('', request, response);
+
+    const filesWithIds = [];
+
+    for (const file of result.files) {
+      const id = randomUUID();
+      await this.mediaRepository.create({
+        id,
+        fileOriginalName: file.fileName,
+        fileName: file.newFileName,
+        fileUrl: file.fileUrl,
+        fileLocation: file.location,
+        fileType: file.mimetype,
+        isUsed: false,
+      });
+
+      filesWithIds.push({
+        id,
+        fileUrl: file.fileUrl,
+        fileName: file.fileName,
+      });
+    }
+
+    return {
+      files: filesWithIds,
+      fields: result.fields
+    };
   }
 
-  @get('/media', {
+
+  /**
+   * Get files and fields for the request
+   * @param request - Http request
+   */
+  // private static getFilesAndFields(request: Request) {
+  //   const uploadedFiles = request.files;
+  //   const mapper = (f: globalThis.Express.Multer.File) => {
+  //     console.log('file', f);
+  //     return {
+  //       fieldname: f.fieldname,
+  //       fileName: f.originalname,
+  //       newFileName: f.filename,
+  //       fileUrl: `${process.env.API_ENDPOINT}/files/${f.filename}`, // Use f.filename instead of f.originalname
+  //       encoding: f.encoding,
+  //       mimetype: f.mimetype,
+  //       size: f.size,
+  //     };
+  //   };
+  //   let files: object[] = [];
+  //   if (Array.isArray(uploadedFiles)) {
+  //     files = uploadedFiles.map(mapper);
+  //   } else {
+  //     for (const filename in uploadedFiles) {
+  //       files.push(...uploadedFiles[filename].map(mapper));
+  //     }
+  //   }
+
+  //   return {files, fields: request.body};
+  // }
+
+  @get('/files', {
     responses: {
-      '200': {
-        description: 'Array of Media model instances',
+      200: {
         content: {
+          // string[]
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Media, {includeRelations: true}),
+              items: {
+                type: 'string',
+              },
             },
           },
         },
+        description: 'A list of files',
       },
     },
   })
-  async find(@param.filter(Media) filter?: Filter<Media>): Promise<Media[]> {
-    return this.mediaRepository.find(filter);
+  async listFiles() {
+    const files = await readdir(this.storageDirectory);
+    return files;
   }
 
-  @get('/media/{id}', {
+  @get('/files/{folderName}', {
     responses: {
-      '200': {
-        description: 'Media model instance',
+      200: {
         content: {
+          // string[]
           'application/json': {
-            schema: getModelSchemaRef(Media, {includeRelations: true}),
+            schema: {
+              type: 'array',
+              items: {
+                type: 'string',
+              },
+            },
           },
         },
+        description: 'A list of files',
       },
     },
   })
-  async findById(
-    @param.path.string('id') id: string,
-    @param.filter(Media, {exclude: 'where'})
-    filter?: FilterExcludingWhere<Media>,
-  ): Promise<Media> {
-    return this.mediaRepository.findById(id, filter);
+  async listFolderFiles(
+    @param.path.string('folderName') folderName: string,
+  ) {
+    const folderPath = path.resolve(this.storageDirectory, folderName);
+
+    // Security check to prevent directory traversal
+    if (!folderPath.startsWith(this.storageDirectory)) {
+      throw new HttpErrors.BadRequest('Invalid folder path');
+    }
+
+    if (!fs.existsSync(folderPath)) {
+      throw new HttpErrors.NotFound(`Folder "${folderName}" not found`);
+    }
+
+    const files = await readdir(folderPath);
+    return files;
+
   }
 
-  @patch('/media/{id}', {
-    responses: {
-      '204': {
-        description: 'Media PATCH success',
-      },
-    },
-  })
-  async updateById(
-    @param.path.string('id') id: string,
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Media, {
-            partial: true,
-            exclude: ['id', 'createdAt'],
-          }),
-        },
-      },
-    })
-    media: Partial<Media>,
-  ): Promise<void> {
-    await this.mediaRepository.updateById(id, {
-      ...media,
-      updatedAt: new Date(),
+  @get('/files/file/{path}/{fileName}')
+  @oas.response.file()
+  async downloadFile(
+    @param.path.string('path') folderPath: string,
+    @param.path.string('fileName') fileName: string,
+    @inject(RestBindings.Http.RESPONSE) response: Response,
+  ) {
+    const file = this.validateFileName(`${folderPath}/${fileName}`);
+
+    return new Promise<void>((resolve) => {
+      fs.readFile(file, (err, data) => {
+        if (err) {
+          response.status(404).send('Something Went Wrong');
+          return resolve();
+        }
+
+        response.setHeader('Content-Type', 'application/octet-stream');
+        response.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
+        response.status(200).end(data);
+
+        resolve();
+      });
     });
   }
 
-  @del('/media/{id}', {
-    responses: {
-      '204': {
-        description: 'Media DELETE success',
-      },
-    },
-  })
-  async deleteById(@param.path.string('id') id: string): Promise<void> {
-    const media = await this.mediaRepository.findById(id);
-    await this.mediaRepository.deleteById(id);
+  @get('/files/file/{fileName}')
+  @oas.response.file()
+  async downloadFileOutsideFolder(
+    @param.path.string('fileName') fileName: string,
+    @inject(RestBindings.Http.RESPONSE) response: Response,
+  ) {
+    const file = this.validateFileName(fileName);
 
-    if (media.fileLocation) {
-      await fsPromises.rm(media.fileLocation, {force: true});
+    return new Promise<void>((resolve) => {
+      fs.readFile(file, (err, data) => {
+        if (err) {
+          response.status(404).send('File not found');
+          return resolve();
+        }
+
+        const contentType = mime.lookup(fileName) || 'application/octet-stream';
+        response.setHeader('Content-Type', contentType);
+
+        // ❌ No Content-Disposition (browser will preview if possible)
+        response.status(200).end(data);
+        resolve();
+      });
+    });
+  }
+
+
+  /**
+   * Validate file names to prevent them goes beyond the designated directory
+   * @param fileName - File name
+   */
+  private validateFileName(filePath: string): string {
+    const resolved = path.resolve(this.storageDirectory, filePath);
+
+    if (!resolved.startsWith(this.storageDirectory)) {
+      throw new HttpErrors.BadRequest(`Invalid file path: ${filePath}`);
     }
+
+    if (!fs.existsSync(resolved)) {
+      throw new HttpErrors.NotFound('File not found');
+    }
+
+    return resolved;
+  }
+
+  private static getFilesAndFields(request: Request, slug: string = '') {
+    const uploadedFiles = request.files;
+    const baseUrl = getBaseUrl();
+    const mapper = (f: Express.Multer.File) => ({
+      fieldname: f.fieldname,
+      fileName: f.originalname,
+      newFileName: f.filename,
+      fileUrl: `${baseUrl}/files/file/${encodeURIComponent(slug ? slug + '/' + f.filename : f.filename)}`,
+      encoding: f.encoding,
+      mimetype: f.mimetype,
+      size: f.size,
+      location: f.path,
+    });
+
+    let files: object[] = [];
+    if (Array.isArray(uploadedFiles)) {
+      files = uploadedFiles.map(mapper);
+    } else {
+      for (const filename in uploadedFiles) {
+        files.push(...uploadedFiles[filename].map(mapper));
+      }
+    }
+
+    return {files, fields: request.body};
   }
 }

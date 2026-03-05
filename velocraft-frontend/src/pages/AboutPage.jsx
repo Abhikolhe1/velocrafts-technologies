@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import CtaButton from '../components/CtaButton';
 import { useEffect, useState } from 'react';
 // import { teamMembers } from '../data/team'; // Used in Our Team section (commented)
 import AnimateOnScroll from '../components/AnimateOnScroll';
@@ -152,12 +153,9 @@ export default function AboutPage() {
             ))}
           </AnimateStagger>
           <div className="text-center mt-12">
-            <Link
-              to="/contact"
-              className="inline-block bg-accent text-primary font-semibold px-8 py-4 rounded-lg hover:opacity-90 transition-opacity"
-            >
+            <CtaButton to="/contact" variant="primary">
               Get in Touch
-            </Link>
+            </CtaButton>
           </div>
         </AnimateOnScroll>
       </section>
