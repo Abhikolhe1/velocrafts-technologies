@@ -49,7 +49,7 @@ export default function ProjectDetailPage() {
   return (
     <>
       {/* Section 1: Hero */}
-      <section className="pt-32 pb-12 bg-primary">
+      <section className="pt-32 pb-12" style={{ background: 'linear-gradient(135deg, #0a0e27 0%, #16213e 50%, #1a1f3a 100%)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center gap-4 mb-6">
             <CtaButton to="/portfolio" variant="primary" className="!px-4 !py-2 text-sm">

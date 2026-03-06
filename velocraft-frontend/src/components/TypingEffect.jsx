@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 export default function TypingEffect({ onShapeChange }) {
   const phrases = [
     "Digital Innovation",
-    "AI Solutions",
+    "Connected Solutions",
     "Future Technology"
   ]
 
