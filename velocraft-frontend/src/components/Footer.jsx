@@ -49,7 +49,10 @@ function SocialIcon({ href, label }) {
 
 export default function Footer() {
   return (
-    <footer className="bg-primary text-white py-10">
+    <footer 
+      className="text-white py-10"
+      style={{ background: 'linear-gradient(135deg, #0a0e27 0%, #16213e 50%, #1a1f3a 100%)' }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
