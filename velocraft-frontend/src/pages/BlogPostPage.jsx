@@ -160,7 +160,7 @@ export default function BlogPostPage() {
               <AnimateOnScroll animation="lift-in" delay={0.3} className="prose prose-lg max-w-none">
                 {post.featuredImage ? (
                   <div className="aspect-video rounded-xl mb-10 overflow-hidden bg-gray-100">
-                    <img src={post.featuredImage} alt={post.title} className="w-full h-full object-cover" />
+                    <img src={post.featuredImage} alt={post.title} className="w-full h-full object-fill" />
                   </div>
                 ) : (
                   <div className="aspect-video bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl mb-10 flex items-center justify-center">

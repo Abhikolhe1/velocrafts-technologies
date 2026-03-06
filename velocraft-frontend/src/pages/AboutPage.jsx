@@ -69,8 +69,8 @@ export default function AboutPage() {
           <AnimateOnScroll animation="slide-in-left" delay={0.3}>
             <h2 className="text-3xl md:text-4xl font-bold text-primary mb-12 text-center">Mission & Values</h2>
           </AnimateOnScroll>
-          <AnimateStagger animation="soft-zoom" className="grid md:grid-cols-3 gap-8" staggerDelay={0.2}>
-            <div className="bg-white rounded-xl p-8 shadow-sm flex flex-col" style={{ height: '260px' }}>
+          <AnimateStagger animation="soft-zoom" className="grid md:grid-cols-3 gap-8" staggerDelay={0.2} threshold={0.01}>
+            <div className="bg-white rounded-xl p-8 shadow-sm flex flex-col" style={{ height: '270px' }}>
               <div className="w-12 h-12 rounded-lg bg-accent/20 flex items-center justify-center mb-4 flex-shrink-0">
                 <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -79,7 +79,7 @@ export default function AboutPage() {
               <h3 className="text-xl font-semibold text-primary mb-2 flex-shrink-0">Innovation</h3>
               <p className="text-gray-600 overflow-y-auto flex-1 min-h-0" title="We embrace new technologies and methodologies to deliver solutions that stay ahead of the curve.">We embrace new technologies and methodologies to deliver solutions that stay ahead of the curve.</p>
             </div>
-            <div className="bg-white rounded-xl p-8 shadow-sm flex flex-col" style={{ height: '260px' }}>
+            <div className="bg-white rounded-xl p-8 shadow-sm flex flex-col" style={{ height: '270px' }}>
               <div className="w-12 h-12 rounded-lg bg-accent/20 flex items-center justify-center mb-4 flex-shrink-0">
                 <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -88,7 +88,7 @@ export default function AboutPage() {
               <h3 className="text-xl font-semibold text-primary mb-2 flex-shrink-0">Quality</h3>
               <p className="text-gray-600 overflow-y-auto flex-1 min-h-0" title="We deliver robust, maintainable code and design that meets the highest standards.">We deliver robust, maintainable code and design that meets the highest standards.</p>
             </div>
-            <div className="bg-white rounded-xl p-8 shadow-sm flex flex-col" style={{ height: '260px' }}>
+            <div className="bg-white rounded-xl p-8 shadow-sm flex flex-col" style={{ height: '270px' }}>
               <div className="w-12 h-12 rounded-lg bg-accent/20 flex items-center justify-center mb-4 flex-shrink-0">
                 <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -140,9 +140,11 @@ export default function AboutPage() {
 
       {/* Stats Section */}
       <section className="py-20 md:py-28 bg-white">
-        <AnimateOnScroll animation="mask-reveal" delay={0.2} threshold={0.01} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-12 text-center">Our Impact</h2>
-          <AnimateStagger animation="lift-in" className="grid grid-cols-2 md:grid-cols-4 gap-8" staggerDelay={0.22}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimateOnScroll animation="blur-in" delay={0.2} threshold={0.01}>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-12 text-center">Our Impact</h2>
+          </AnimateOnScroll>
+          <AnimateStagger animation="lift-in" className="grid grid-cols-2 md:grid-cols-4 gap-8" staggerDelay={0.22} threshold={0.01}>
             {metrics.map((m) => (
               <div key={m.label} className="text-center">
                 <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
@@ -157,7 +159,7 @@ export default function AboutPage() {
               Get in Touch
             </CtaButton>
           </div>
-        </AnimateOnScroll>
+        </div>
       </section>
     </>
   );

@@ -1,4 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
+import {belongsTo, Entity, model, property} from '@loopback/repository';
+import {Media, MediaWithRelations} from './media.model';
 
 @model({
   settings: {
@@ -32,10 +33,18 @@ export class Portfolio extends Entity {
   })
   title: string;
 
-  @property({
-    type: 'string',
-  })
-  image?: string;
+  @belongsTo(
+    () => Media,
+    {name: 'featuredMedia', keyFrom: 'imageId', keyTo: 'id'},
+    {
+      required: false,
+      mysql: {
+        dataType: 'varchar',
+        dataLength: 36,
+      },
+    },
+  )
+  imageId?: string;
 
   @property({
     type: 'string',
@@ -60,8 +69,10 @@ export class Portfolio extends Entity {
   approach?: string;
 
   @property({
-    type: 'object',
+    type: 'array',
+    itemType: 'string',
     mysql: {dataType: 'json'},
+    jsonSchema: {type: 'array', items: {type: 'string'}},
   })
   technologies?: string[];
 
@@ -72,8 +83,10 @@ export class Portfolio extends Entity {
   category: string;
 
   @property({
-    type: 'object',
+    type: 'array',
+    itemType: 'string',
     mysql: {dataType: 'json'},
+    jsonSchema: {type: 'array', items: {type: 'string'}},
   })
   results?: string[];
 
@@ -93,8 +106,10 @@ export class Portfolio extends Entity {
   teamSize?: string;
 
   @property({
-    type: 'object',
+    type: 'array',
+    itemType: 'string',
     mysql: {dataType: 'json'},
+    jsonSchema: {type: 'array', items: {type: 'string'}},
   })
   keyFeatures?: string[];
 
@@ -115,6 +130,8 @@ export class Portfolio extends Entity {
   }
 }
 
-export interface PortfolioRelations {}
+export interface PortfolioRelations {
+  featuredMedia?: MediaWithRelations;
+}
 
 export type PortfolioWithRelations = Portfolio & PortfolioRelations;

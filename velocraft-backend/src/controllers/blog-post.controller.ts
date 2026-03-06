@@ -78,7 +78,10 @@ export class BlogPostController {
   async find(
     @param.filter(BlogPost) filter?: Filter<BlogPost>,
   ): Promise<BlogPost[]> {
-    return this.blogPostRepository.find(filter);
+    return this.blogPostRepository.find({
+      ...filter,
+      include: [{relation: 'featuredMedia'}],
+    });
   }
 
   @get('/blog-posts/slug/{slug}', {
@@ -118,7 +121,10 @@ export class BlogPostController {
     @param.filter(BlogPost, {exclude: 'where'})
     filter?: FilterExcludingWhere<BlogPost>,
   ): Promise<BlogPost> {
-    return this.blogPostRepository.findById(id, filter);
+    return this.blogPostRepository.findById(id, {
+      ...filter,
+      include: [{relation: 'featuredMedia'}],
+    });
   }
 
   @patch('/blog-posts/{id}', {

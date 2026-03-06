@@ -5,7 +5,7 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import {RepositoryMixin} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
+import {RestApplication, RestBindings} from '@loopback/rest';
 import path from 'path';
 import {MySequence} from './sequence';
 import {FILE_UPLOAD_SERVICE, STORAGE_DIRECTORY} from './keys';
@@ -13,7 +13,8 @@ import {MediaService} from './services/media.service';
 import {logErrorMiddleware} from './middleware/log-error.middleware';
 export {ApplicationConfig};
 
-const STORAGE_PATH = path.resolve(__dirname, '../public/uploads');
+// Uploads stored outside public so they are not in git (see .gitignore)
+const STORAGE_PATH = path.resolve(process.cwd(), 'public/uploads');
 
 export class VelocraftsApplication extends BootMixin(
   RepositoryMixin(RestApplication),
@@ -29,13 +30,15 @@ export class VelocraftsApplication extends BootMixin(
     this.bind(FILE_UPLOAD_SERVICE).to((req, res, cb) => cb());
     this.service(MediaService);
 
+    // Disable strict request body validation so JSON arrays are accepted for portfolio fields
+    this.bind(RestBindings.REQUEST_BODY_PARSER_OPTIONS).to({
+      validation: false as any,
+    });
+
     // Set up the custom sequence
     this.sequence(MySequence);
     // Log real error cause (e.g. unwrap AggregateError → ECONNREFUSED) for 500s
     this.middleware(logErrorMiddleware);
-
-    // Serve static files under /public so API routes (e.g. /portfolios) are not shadowed
-    this.static('/public', path.join(__dirname, '../public'));
 
     // Customize @loopback/rest-explorer configuration here
     this.configure(RestExplorerBindings.COMPONENT).to({

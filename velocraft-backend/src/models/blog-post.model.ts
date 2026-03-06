@@ -56,11 +56,6 @@ export class BlogPost extends Entity {
   })
   date: string;
 
-  @property({
-    type: 'string',
-  })
-  featuredImage?: string;
-
   @belongsTo(
     () => Media,
     {name: 'featuredMedia'},

@@ -57,7 +57,7 @@ export default function Navbar() {
 
           <button
             type="button"
-            className="md:hidden p-2 rounded-lg text-white hover:bg-white/10"
+            className="md:hidden p-2 rounded-lg text-black hover:bg-white/10"
             onClick={() => setIsOpen(!isOpen)}
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
@@ -90,7 +90,7 @@ export default function Navbar() {
 
         <div
           id="mobile-menu"
-          className={`md:hidden overflow-hidden transition-all duration-300 ${isOpen ? "max-h-96 pb-4" : "max-h-0"}`}
+          className={`md:hidden overflow-hidden transition-all duration-300 ${isOpen ? "max-h-120 pb-4" : "max-h-0"}`}
         >
           <div className="flex flex-col gap-4 pt-4">
             {navLinks.map((link) => (

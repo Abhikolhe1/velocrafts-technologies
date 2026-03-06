@@ -24,7 +24,7 @@ export default function HowWeWork() {
             <div key={step.number} className="relative">
               <div
                 className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 flex flex-col"
-                style={{ height: '220px' }}
+                style={{ height: '260px' }}
               >
                 <span className="text-4xl font-bold text-accent/30 flex-shrink-0">{step.number}</span>
                 <h3 className="text-xl font-semibold text-primary mt-2 mb-3 flex-shrink-0 line-clamp-1" title={step.title}>{step.title}</h3>
@@ -36,13 +36,13 @@ export default function HowWeWork() {
                 </p>
               </div>
               {step.number !== '04' && (
-                <div className="hidden lg:block absolute top-1/2 -right-4 w-8 h-0.5 bg-accent/30 -translate-y-1/2" aria-hidden="true" />
+                <div className="hidden lg:block absolute top-1/2 -right-8 w-8 h-0.5 bg-accent/30 -translate-y-1/2" aria-hidden="true" />
               )}
             </div>
           ))}
         </AnimateStagger>
         <AnimateOnScroll animation="slide-in-right" delay={0.2} className="text-center mt-12">
-          <CtaButton to="/contact" variant="primary">
+          <CtaButton to="/contact" variant="primary" >
             Start your project
           </CtaButton>
         </AnimateOnScroll>

@@ -9,9 +9,9 @@ export default function BlogCard({ title, excerpt, category, author, date, slug,
 
   return (
     <article className="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-      <div className="aspect-video bg-gradient-to-br from-primary to-secondary flex items-center justify-center flex-shrink-0 overflow-hidden">
+      <div className="aspect-video bg-gray-100 flex items-center justify-center overflow-hidden">
         {featuredImage ? (
-          <img src={featuredImage} alt={title} className="w-full h-full object-cover" />
+          <img src={featuredImage} alt={title} className="w-full h-full object-fill" />
         ) : (
           <svg className="w-16 h-16 text-white/30 group-hover:text-white/50 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z" />

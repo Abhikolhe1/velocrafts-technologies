@@ -1,7 +1,7 @@
 import {BindingKey} from '@loopback/core';
 
 /**
- * Directory where uploaded files are stored (e.g. public/uploads)
+ * Directory where uploaded files are stored (e.g. uploads/ at backend root; not in git)
  */
 export const STORAGE_DIRECTORY = BindingKey.create<string>('storage.directory');
 

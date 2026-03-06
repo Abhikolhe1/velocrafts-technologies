@@ -26,7 +26,6 @@ CREATE TABLE blog_posts (
   category VARCHAR(255) NOT NULL,
   author VARCHAR(255) NOT NULL,
   date VARCHAR(50) NOT NULL,
-  featuredImage VARCHAR(1024) DEFAULT NULL,
   featuredMediaId VARCHAR(36) DEFAULT NULL,
   contentIntro TEXT NOT NULL,
   contentSections JSON DEFAULT NULL,

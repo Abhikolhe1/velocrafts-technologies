@@ -9,11 +9,14 @@ const quickLinks = [
 ];
 
 const footerServices = [
-  'Web Development',
-  'Mobile Apps',
-  'AI Solutions',
-  'Digital Marketing',
-  'Cloud & DevOps',
+  'Web App Development',
+  'Mobile App Development',
+  'Generative & Agentic AI Development',
+  'AI Workflows & Model Training',
+  'Digital Marketing & SEO',
+  'UI/UX Design',
+  'Cloud & DevOps Solutions',
+  'Analytics & Insights',
 ];
 
 const socialLinks = [
@@ -74,7 +77,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {footerServices.map((s) => (
                 <li key={s}>
-                  <Link to="/" className="text-white/80 hover:text-accent transition-colors text-sm">
+                  <Link to="/#services" className="text-white/80 hover:text-accent transition-colors text-sm">
                     {s}
                   </Link>
                 </li>
@@ -87,7 +90,7 @@ export default function Footer() {
             <p className="text-white/80 text-sm mb-2">
               <a href="mailto:contact@velocrafts.tech" className="hover:text-accent transition-colors">contact@velocrafts.tech</a>
             </p>
-            <p className="text-white/80 text-sm mb-4">+1 (555) 123-4567</p>
+            <p className="text-white/80 text-sm mb-4">+91 8605854811</p>
             <div className="flex gap-4">
               {socialLinks.map((s) => (
                 <SocialIcon key={s.label} href={s.href} label={s.icon} />

@@ -8,6 +8,7 @@
     "backend": "cd velocraft-backend && npm start",
     "build:frontend": "cd velocraft-frontend && npm run build",
     "build:backend": "cd velocraft-backend && npm run build",
+    "migrate": "cd velocraft-backend && npm run migrate",
     "install:all": "cd velocraft-frontend && npm install && cd ../velocraft-backend && npm install"
   }
 }

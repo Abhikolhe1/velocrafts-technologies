@@ -55,12 +55,14 @@ export async function fetchProjectBySlug(slug) {
 }
 
 function apiToProject(api) {
+  // Use uploaded media image from /files (featuredMedia.fileUrl); do not use local image path
+  const image = api.featuredMedia?.fileUrl ?? null;
   return {
     id: api.id,
     order: api.order,
     slug: api.slug,
     title: api.title,
-    image: api.image,
+    image,
     shortDescription: api.shortDescription,
     description: api.description,
     challenge: api.challenge,

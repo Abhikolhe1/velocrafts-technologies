@@ -16,13 +16,13 @@ export default function PortfolioCard({
       }`}
       style={{ height: compact ? "480px" : "520px" }}
     >
-      <div className="flex-shrink-0 p-2 bg-gray-50 rounded-xl">
+      <div className="flex-shrink-0 bg-gray-50 rounded-xl">
         <div className="aspect-video overflow-hidden rounded-lg">
           {image ? (
             <img
               src={image}
               alt={title}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-fill"
             />
           ) : (
             <div className="w-full h-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white/20 group-hover:text-white/40 transition-colors">

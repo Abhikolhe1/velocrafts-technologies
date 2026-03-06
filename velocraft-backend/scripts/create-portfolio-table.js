@@ -20,7 +20,7 @@ CREATE TABLE portfolio (
   \`order\` INT DEFAULT 0,
   slug VARCHAR(512) NOT NULL,
   title VARCHAR(512) NOT NULL,
-  image VARCHAR(1024) DEFAULT NULL,
+  imageId VARCHAR(36) DEFAULT NULL,
   shortDescription TEXT NOT NULL,
   description TEXT NOT NULL,
   challenge TEXT DEFAULT NULL,

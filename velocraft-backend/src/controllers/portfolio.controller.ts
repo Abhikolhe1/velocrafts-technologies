@@ -34,12 +34,31 @@ export class PortfolioController {
   })
   async create(
     @requestBody({
+      description: 'Portfolio payload (technologies, results, keyFeatures are arrays of strings)',
+      required: true,
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Portfolio, {
-            title: 'NewPortfolio',
-            exclude: ['id', 'createdAt', 'updatedAt'],
-          }),
+          schema: {
+            type: 'object',
+            required: ['slug', 'title', 'shortDescription', 'description', 'category'],
+            properties: {
+              order: {type: 'number'},
+              slug: {type: 'string'},
+              title: {type: 'string'},
+              imageId: {type: 'string', description: 'Media id from /files upload'},
+              shortDescription: {type: 'string'},
+              description: {type: 'string'},
+              challenge: {type: 'string'},
+              approach: {type: 'string'},
+              technologies: {type: 'array', items: {type: 'string'}},
+              category: {type: 'string'},
+              results: {type: 'array', items: {type: 'string'}},
+              client: {type: 'string'},
+              duration: {type: 'string'},
+              teamSize: {type: 'string'},
+              keyFeatures: {type: 'array', items: {type: 'string'}},
+            },
+          },
         },
       },
     })
@@ -84,6 +103,7 @@ export class PortfolioController {
     return this.portfolioRepository.find({
       ...filter,
       order: Array.isArray(order) ? order : [order],
+      include: [{relation: 'featuredMedia'}],
     });
   }
 
@@ -104,6 +124,7 @@ export class PortfolioController {
   ): Promise<Portfolio | null> {
     const found = await this.portfolioRepository.findOne({
       where: {slug},
+      include: [{relation: 'featuredMedia'}],
     });
     return found ?? null;
   }
@@ -125,7 +146,10 @@ export class PortfolioController {
     @param.filter(Portfolio, {exclude: 'where'})
     filter?: FilterExcludingWhere<Portfolio>,
   ): Promise<Portfolio> {
-    return this.portfolioRepository.findById(id, filter);
+    return this.portfolioRepository.findById(id, {
+      ...filter,
+      include: [{relation: 'featuredMedia'}],
+    });
   }
 
   @patch('/portfolios/{id}', {
@@ -140,10 +164,27 @@ export class PortfolioController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Portfolio, {
-            partial: true,
-            exclude: ['id', 'createdAt'],
-          }),
+          schema: {
+            type: 'object' as const,
+            properties: {
+              order: {type: 'number' as const},
+              slug: {type: 'string' as const},
+              title: {type: 'string' as const},
+              imageId: {type: 'string' as const},
+              shortDescription: {type: 'string' as const},
+              description: {type: 'string' as const},
+              challenge: {type: 'string' as const},
+              approach: {type: 'string' as const},
+              technologies: {type: 'array' as const, items: {type: 'string' as const}},
+              category: {type: 'string' as const},
+              results: {type: 'array' as const, items: {type: 'string' as const}},
+              client: {type: 'string' as const},
+              duration: {type: 'string' as const},
+              teamSize: {type: 'string' as const},
+              keyFeatures: {type: 'array' as const, items: {type: 'string' as const}},
+            },
+            additionalProperties: false,
+          } as any,
         },
       },
     })
