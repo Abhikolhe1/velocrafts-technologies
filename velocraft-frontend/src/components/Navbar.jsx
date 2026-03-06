@@ -15,12 +15,11 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   const linkClass = ({ isActive }) =>
-    `text-sm font-medium transition-colors duration-200 ${
-      isActive ? "text-accent" : "text-black hover:text-accent"
-    }`;
+    `text-sm font-medium transition-colors duration-200 ${isActive ? 'text-accent' : 'text-primary/90 hover:text-accent'}`;
+
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm transition-all duration-300"
+      className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-lg transition-all duration-300"
       role="navigation"
       aria-label="Main navigation"
     >
