@@ -136,7 +136,7 @@ export default function PortfolioGrid({
   const stickyScrollHeight = `${Math.max(320, stickyProjects.length * 130)}vh`;
 
   return (
-    <section id="portfolio" className="py-16 md:py-20 bg-gray-50">
+    <section id="portfolio" className="py-16 md:py-20 bg-white">
       {loading ? (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center py-12 text-gray-500">Loading portfolio…</div>

@@ -3,7 +3,7 @@ import AnimateOnScroll from '../components/AnimateOnScroll';
 export default function CareersPage() {
   return (
     <>
-      <section className="pt-32 pb-20" style={{ background: 'linear-gradient(135deg, #0a0e27 0%, #16213e 50%, #1a1f3a 100%)' }}>
+      <section className="pt-40 py-20" style={{ background: '#153A5B' }}>
         <AnimateOnScroll animation="blur-in" delay={0.2} threshold={0.01} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Join Our Team</h1>

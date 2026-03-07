@@ -5,7 +5,7 @@ export default function ContactPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="pt-32 pb-20" style={{ background: 'linear-gradient(135deg, #0a0e27 0%, #16213e 50%, #1a1f3a 100%)' }}>
+      <section className="pt-40 py-20" style={{ background: '#153A5B' }}>
         <AnimateOnScroll
           animation="blur-in"
           delay={0.2}
@@ -58,7 +58,7 @@ export default function ContactPage() {
                         d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
                       />
                     </svg>
-                    Office Address: Kapadia Commercial Complex, 2nd Floor office
+                    Kapadia Commercial Complex, 2nd Floor office
                     No. 25/26, Opposite Kalika Mandir, Gadkari Chowk, Near Tata
                     Motors, Nashik, Maharashtra 422002.{" "}
                   </p>

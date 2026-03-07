@@ -16,19 +16,19 @@ const services = [
   {
     title: "Web App Development",
     description:
-      "Scalable, secure web applications built with modern frameworks. From enterprise portals to SaaS platforms.",
+      "We build secure, scalable web applications for enterprises and SaaS platforms using modern frameworks.",
     icon: <GlobeIcon />,
   },
   {
     title: "Mobile App Development",
     description:
-      "Native and cross-platform mobile apps for iOS and Android. Flutter, React Native, and native development.",
+      "We develop native and cross platform mobile apps for iOS and Android using Flutter, React Native, and other modern technologies.",
     icon: <DevicePhoneMobileIcon />,
   },
   {
     title: "Generative & Agentic AI Development",
     description:
-      "LLM-powered applications, AI copilots, autonomous agents, RAG systems, and workflow automation tailored for enterprise and SaaS use cases.",
+      "LLM powered applications, AI copilots, autonomous agents, and RAG systems designed for enterprise and SaaS automation needs.",
     icon: <CommandLineIcon />,
   },
   {
@@ -40,25 +40,25 @@ const services = [
   {
     title: "Digital Marketing & SEO",
     description:
-      "Data-driven marketing strategies, SEO optimization, and growth campaigns that deliver measurable results.",
+      "Data driven marketing strategies, SEO optimization, and growth campaigns focused on delivering real, measurable results.",
     icon: <MegaphoneIcon />,
   },
   {
     title: "UI/UX Design",
     description:
-      "User-centered design that combines aesthetics with usability. Prototypes, wireframes, and design systems.",
+      "User centered design blending aesthetics with usability, including wireframes, prototypes, and complete design systems.",
     icon: <PaintBrushIcon />,
   },
   {
     title: "Cloud & DevOps Solutions",
     description:
-      "Cloud migration, CI/CD pipelines, and infrastructure as code. AWS, Azure, and GCP expertise.",
+      "Cloud migration, CI CD pipelines, and infrastructure as code with strong expertise across AWS, Azure, and GCP.",
     icon: <CloudIcon />,
   },
   {
     title: "Analytics & Insights",
     description:
-      "Business intelligence, dashboards, and data analytics to drive informed decision-making.",
+      "Business intelligence, interactive dashboards, and data analytics that help you make smarter, informed decisions.",
     icon: <ChartBarIcon />,
   },
 ];
@@ -76,8 +76,8 @@ export default function ServicesSection() {
             Our Services
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-            End-to-end digital solutions that transform your business and scale
-            with your growth.
+            Complete digital solutions designed to transform your business and
+            support long term growth at every stage.
           </p>
         </AnimateOnScroll>
 
