@@ -5,7 +5,7 @@ export default function ContactPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-primary">
+      <section className="pt-32 pb-20" style={{ background: 'linear-gradient(135deg, #0a0e27 0%, #16213e 50%, #1a1f3a 100%)' }}>
         <AnimateOnScroll
           animation="blur-in"
           delay={0.2}

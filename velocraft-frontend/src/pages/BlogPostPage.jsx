@@ -91,7 +91,7 @@ export default function BlogPostPage() {
   return (
     <>
       {/* Hero / Header */}
-      <section className="pt-32 pb-12 bg-primary">
+      <section className="pt-32 pb-12" style={{ background: 'linear-gradient(135deg, #0a0e27 0%, #16213e 50%, #1a1f3a 100%)' }}>
         <AnimateOnScroll animation="blur-in" delay={0.2} threshold={0.01} className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <CtaButton to="/blog" variant="primary" className="mb-6 !px-4 !py-2 text-sm">
             Back to Blog

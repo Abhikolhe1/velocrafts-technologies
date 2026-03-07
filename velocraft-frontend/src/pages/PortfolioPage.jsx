@@ -40,7 +40,7 @@ export default function PortfolioPage() {
 
   return (
     <>
-      <section className="pt-32 pb-12 bg-primary">
+      <section className="pt-32 pb-12" style={{ background: 'linear-gradient(135deg, #0a0e27 0%, #16213e 50%, #1a1f3a 100%)' }}>
         <AnimateOnScroll animation="blur-in" delay={0.2} threshold={0.01} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Portfolio & Case Studies</h1>

@@ -36,7 +36,7 @@ export default function TestimonialSlider() {
   }, []);
 
   return (
-    <section className="py-20 md:py-28 relative overflow-hidden" style={{ backgroundColor: '#0F576F' }}>
+    <section className="py-20 md:py-28 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0a0e27 0%, #16213e 50%, #1a1f3a 100%)' }}>
       <div
         className="absolute inset-0 opacity-5"
         style={{

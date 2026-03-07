@@ -2,9 +2,10 @@
 @import "tailwindcss";
 
 @theme {
-  /* Velocrafts Technologies Color Palette */
-  --color-primary: #153A5B;
-  --color-secondary: #0F576F;
+  /* Velocrafts Technologies Color Palette - Updated Dark Theme */
+  --color-primary: #0a0e27;
+  --color-secondary: #16213e;
+  --color-tertiary: #1a1f3a;
   --color-accent: #FFB400;
   --color-accent-hover: #e6a200;
   
