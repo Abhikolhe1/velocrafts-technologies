@@ -52,18 +52,28 @@ export class Media extends Entity {
   @property({
     type: 'boolean',
     default: false,
+    mysql: {
+      dataType: 'tinyint',
+      default: 0,
+    },
   })
   isUsed?: boolean;
 
   @property({
     type: 'date',
     defaultFn: 'now',
+    mysql: {
+      dataType: 'datetime',
+    },
   })
   createdAt?: Date;
 
   @property({
     type: 'date',
     defaultFn: 'now',
+    mysql: {
+      dataType: 'datetime',
+    },
   })
   updatedAt?: Date;
 
@@ -72,8 +82,6 @@ export class Media extends Entity {
   }
 }
 
-export interface MediaRelations {
-  // describe navigational properties here
-}
+export interface MediaRelations {}
 
 export type MediaWithRelations = Media & MediaRelations;

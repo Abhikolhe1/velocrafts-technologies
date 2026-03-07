@@ -31,20 +31,29 @@ interface ContactRequestBody extends Omit<Contact, 'id'> {
   turnstileToken?: string;
 }
 
-async function verifyTurnstile(token: string, remoteip?: string): Promise<boolean> {
-  const secret = process.env.TURNSTILE_SECRET_KEY || '1x0000000000000000000000000000000AA';
+async function verifyTurnstile(
+  token: string,
+  remoteip?: string,
+): Promise<boolean> {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  if (!secret) {
+    throw new Error('TURNSTILE_SECRET_KEY is not configured');
+  }
   const body = new URLSearchParams({
     secret,
     response: token,
     ...(remoteip && {remoteip}),
   }).toString();
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const req = https.request(
       'https://challenges.cloudflare.com/turnstile/v0/siteverify',
       {
         method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': Buffer.byteLength(body)},
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Length': Buffer.byteLength(body),
+        },
       },
       res => {
         let data = '';
@@ -69,7 +78,11 @@ export class ContactController {
   constructor(
     @inject('repositories.ContactRepository')
     public contactRepository: ContactRepository,
-    @inject(RestBindings.Http.REQUEST) private req: {headers: Record<string, unknown>; socket?: {remoteAddress?: string}},
+    @inject(RestBindings.Http.REQUEST)
+    private req: {
+      headers: Record<string, unknown>;
+      socket?: {remoteAddress?: string};
+    },
   ) {}
 
   @post('/contacts')
@@ -78,10 +91,13 @@ export class ContactController {
   async create(@requestBody() body: ContactRequestBody): Promise<object> {
     const {turnstileToken, ...contact} = body;
     if (!turnstileToken) {
-      throw new HttpErrors.BadRequest('Verification required. Please complete the captcha.');
+      throw new HttpErrors.BadRequest(
+        'Verification required. Please complete the captcha.',
+      );
     }
-    const remoteip = (this.req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim()
-      || this.req.socket?.remoteAddress;
+    const remoteip =
+      (this.req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() ||
+      this.req.socket?.remoteAddress;
     const valid = await verifyTurnstile(turnstileToken, remoteip);
     if (!valid) {
       throw new HttpErrors.BadRequest('Verification failed. Please try again.');

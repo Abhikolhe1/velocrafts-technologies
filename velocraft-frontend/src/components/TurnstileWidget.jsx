@@ -4,13 +4,16 @@ import { useEffect, useRef } from 'react';
  * Cloudflare Turnstile CAPTCHA widget (explicit rendering).
  * Uses VITE_TURNSTILE_SITE_KEY from env. Falls back to test key if not set.
  */
-const SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY || '1x00000000000000000000AA';
+const SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY;
 
 export default function TurnstileWidget({ onVerify }) {
   const containerRef = useRef(null);
   const widgetIdRef = useRef(null);
   const onVerifyRef = useRef(onVerify);
-  onVerifyRef.current = onVerify;
+
+  useEffect(() => {
+    onVerifyRef.current = onVerify;
+  }, [onVerify]);
 
   useEffect(() => {
     if (!containerRef.current) return;
