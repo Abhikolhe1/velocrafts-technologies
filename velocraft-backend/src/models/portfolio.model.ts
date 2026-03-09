@@ -55,16 +55,25 @@ export class Portfolio extends Entity {
   @property({
     type: 'string',
     required: true,
+    mysql: {
+      dataType: 'text',
+    },
   })
   description: string;
 
   @property({
     type: 'string',
+    mysql: {
+      dataType: 'text',
+    },
   })
   challenge?: string;
 
   @property({
     type: 'string',
+    mysql: {
+      dataType: 'text',
+    },
   })
   approach?: string;
 
