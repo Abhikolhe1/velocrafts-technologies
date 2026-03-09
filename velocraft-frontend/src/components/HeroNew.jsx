@@ -77,7 +77,7 @@ export default function HeroNew() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              Transform your ideas into reality with cutting-edge AI technology
+              Transform your ideas into reality with cutting edge AI technology
             </Motion.p>
 
             <Motion.div

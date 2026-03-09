@@ -5,7 +5,7 @@ export default function ContactPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="pt-40 py-20" style={{ background: '#153A5B' }}>
+      <section className="pt-40 py-20" style={{ background: "#153A5B" }}>
         <AnimateOnScroll
           animation="blur-in"
           delay={0.2}
@@ -24,7 +24,7 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Form & Info Section */}
-      <section className="py-20 md:py-28 bg-gray-50">
+      <section className="py-20 md:py-28 bg-gray-50 overflow-x-hidden">
         <AnimateOnScroll
           animation="slide-in-up"
           delay={0.2}
@@ -32,19 +32,24 @@ export default function ContactPage() {
           className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
         >
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
-            <div className="bg-white rounded-xl p-8 shadow-lg">
-              <h2 className="text-2xl font-bold text-primary mb-6">
-                Send us a message
-              </h2>
-              <ContactForm />
+            {/* Left Column */}
+            <div className="min-w-0">
+              <div className="bg-white rounded-xl p-6 sm:p-8 shadow-lg w-full">
+                <h2 className="text-2xl font-bold text-primary mb-6">
+                  Send us a message
+                </h2>
+                <ContactForm />
+              </div>
             </div>
-            <div>
-              <div className="bg-white rounded-xl p-8 shadow-lg mb-8">
+
+            {/* Right Column */}
+            <div className="min-w-0">
+              <div className="bg-white rounded-xl p-6 sm:p-8 shadow-lg mb-8 w-full">
                 <h3 className="text-xl font-semibold text-primary mb-6">
                   Office Address
                 </h3>
                 <address className="text-gray-600 not-italic space-y-4">
-                  <p className="flex items-start gap-3">
+                  <p className="flex items-start gap-3 min-w-0 break-words">
                     <svg
                       className="w-5 h-5 text-accent flex-shrink-0 mt-0.5"
                       fill="none"
@@ -58,11 +63,12 @@ export default function ContactPage() {
                         d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
                       />
                     </svg>
-                    Kapadia Commercial Complex, 2nd Floor office
-                    No. 25/26, Opposite Kalika Mandir, Gadkari Chowk, Near Tata
-                    Motors, Nashik, Maharashtra 422002.{" "}
+                    Kapadia Commercial Complex, 2nd Floor office No. 25/26,
+                    Opposite Kalika Mandir, Gadkari Chowk, Near Tata Motors,
+                    Nashik, Maharashtra 422002.
                   </p>
-                  <p className="flex items-center gap-3">
+
+                  <p className="flex items-center gap-3 min-w-0 break-words">
                     <svg
                       className="w-5 h-5 text-accent flex-shrink-0"
                       fill="none"
@@ -78,7 +84,8 @@ export default function ContactPage() {
                     </svg>
                     contact@velocrafts.tech
                   </p>
-                  <p className="flex items-center gap-3">
+
+                  <p className="flex items-center gap-3 min-w-0 break-words">
                     <svg
                       className="w-5 h-5 text-accent flex-shrink-0"
                       fill="none"
@@ -96,16 +103,14 @@ export default function ContactPage() {
                   </p>
                 </address>
               </div>
-              <div className="rounded-xl overflow-hidden shadow-lg aspect-video bg-gray-200">
+
+              <div className="rounded-xl overflow-hidden shadow-lg aspect-video bg-gray-200 w-full">
                 <iframe
                   title="Office Location"
                   src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3749.3781203073513!2d73.7833333!3d19.992638899999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTnCsDU5JzMzLjUiTiA3M8KwNDcnMDAuMCJF!5e0!3m2!1sen!2sin!4v1772781279976!5m2!1sen!2sin"
-                  width="100%"
-                  height="100%"
+                  className="w-full h-full"
                   style={{ border: 0 }}
-                  allowFullScreen
                   loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
                 />
               </div>
             </div>

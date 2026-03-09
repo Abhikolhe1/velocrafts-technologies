@@ -102,7 +102,7 @@ function CTA() {
           </Link>
           <Link
             to="/portfolio"
-            className="inline-flex items-center text-accent font-semibold hover:underline"
+            className="inline-block bg-white text-accent font-semibold px-8 py-4 rounded-lg border-2 border-accent hover:bg-accent/5 transition-colors"
           >
             View Portfolio
           </Link>

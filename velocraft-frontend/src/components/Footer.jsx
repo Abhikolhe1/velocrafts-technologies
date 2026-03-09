@@ -70,7 +70,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-2">
             <h4 className="font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
@@ -86,9 +86,9 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-4">
             <h4 className="font-semibold mb-4">Services</h4>
-            <ul className="grid grid-cols-2 gap-x-6 gap-y-2">
+            <ul className="grid grid-cols-1 gap-x-6 gap-y-2">
               {" "}
               {footerServices.map((s) => (
                 <li key={s}>

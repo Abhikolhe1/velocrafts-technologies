@@ -9,6 +9,7 @@ import {RestApplication, RestBindings} from '@loopback/rest';
 import path from 'path';
 import {MySequence} from './sequence';
 import {FILE_UPLOAD_SERVICE, STORAGE_DIRECTORY} from './keys';
+import {EmailService} from './services/email.service';
 import {MediaService} from './services/media.service';
 import {logErrorMiddleware} from './middleware/log-error.middleware';
 export {ApplicationConfig};
@@ -28,6 +29,7 @@ export class VelocraftsApplication extends BootMixin(
     // The media controller uses multer directly; this is only to avoid
     // ResolutionError for 'services.file-upload'.
     this.bind(FILE_UPLOAD_SERVICE).to((req, res, cb) => cb());
+    this.service(EmailService);
     this.service(MediaService);
 
     // Disable strict request body validation so JSON arrays are accepted for portfolio fields

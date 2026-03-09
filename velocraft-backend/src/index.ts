@@ -11,6 +11,9 @@ export async function main(options: ApplicationConfig = {}) {
   const url = app.restServer.url;
   console.log(`Server is running at ${url}`);
   console.log(`Try ${url}/ping`);
+  const contactTo = process.env.CONTACT_EMAIL ?? 'contact@velocrafts.tech';
+  const smtpOk = !!(process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS);
+  console.log(`Contact form emails: ${smtpOk ? `will be sent to ${contactTo}` : 'SMTP not configured (set SMTP_HOST, SMTP_USER, SMTP_PASS in .env)'}`);
 
   return app;
 }

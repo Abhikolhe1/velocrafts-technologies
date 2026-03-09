@@ -10,6 +10,7 @@ import {
 import * as https from 'https';
 import {Contact} from '../models/contact.model';
 import {ContactRepository} from '../repositories/contact.repository';
+import {sendContactNotification} from '../utils/contact-email';
 
 const CONTACT_RESPONSE: ResponseObject = {
   description: 'Contact submission response',
@@ -103,6 +104,8 @@ export class ContactController {
       throw new HttpErrors.BadRequest('Verification failed. Please try again.');
     }
     const created = await this.contactRepository.create(contact);
+    // Send notification email (await so it's attempted before response; errors logged inside)
+    await sendContactNotification(created as Contact);
     return {
       success: true,
       message: 'Thank you for reaching out! We will get back to you soon.',

@@ -16,7 +16,10 @@ export default function PortfolioCard({
       }`}
       style={{ height: compact ? "480px" : "520px" }}
     >
-      <div className="flex-shrink-0 bg-gray-50 rounded-xl">
+      <Link
+        to={`/portfolio/${id}`}
+        className="flex-shrink-0 bg-gray-50 rounded-xl block"
+      >
         <div className="aspect-video overflow-hidden rounded-lg">
           {image ? (
             <img
@@ -37,7 +40,7 @@ export default function PortfolioCard({
             </div>
           )}
         </div>
-      </div>
+      </Link>
       <div
         className={`flex flex-col flex-1 min-h-0 ${compact ? "p-6" : "p-8"}`}
       >
