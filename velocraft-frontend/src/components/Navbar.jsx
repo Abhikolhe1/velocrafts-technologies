@@ -31,9 +31,9 @@ export default function Navbar() {
             aria-label="Velocrafts Technologies Home"
           >
             <img
-              src="/assets/logo/velo.png"
+              src="/assets/logo/velocrafts updated logo.png"
               alt=""
-              className="h-14 sm:h-16 md:h-18 lg:h-15 w-auto"
+              className="h-30 sm:h-32 md:h-34 lg:h-30 w-auto"
               aria-hidden="true"
             />
           </Link>

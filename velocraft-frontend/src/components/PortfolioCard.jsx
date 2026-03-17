@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 export default function PortfolioCard({
   id,
   title,
-  description,
   technologies,
   category,
   image,
@@ -53,12 +52,6 @@ export default function PortfolioCard({
         >
           {title}
         </h3>
-        <p
-          className={`text-gray-600 text-sm mb-4 flex-1 min-h-0 ${compact ? "line-clamp-3 overflow-hidden" : "overflow-y-auto"}`}
-          title={description}
-        >
-          {description}
-        </p>
         <div
           className={`flex flex-wrap gap-2 flex-shrink-0 pr-1 ${compact ? "overflow-y-auto max-h-12" : "overflow-y-auto max-h-14"}`}
           title={technologies.join(", ")}

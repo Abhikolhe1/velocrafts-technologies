@@ -24,7 +24,7 @@ const readdir = promisify(fs.readdir);
 function getBaseUrl(): string {
   const explicit = process.env.API_ENDPOINT;
   if (explicit && explicit.trim().length > 0) return explicit.trim();
-  const host = process.env.HOST ?? '127.0.0.1';
+  const host = process.env.HOST;
   const port = process.env.PORT ?? '3036';
   return `http://${host}:${port}`;
 }

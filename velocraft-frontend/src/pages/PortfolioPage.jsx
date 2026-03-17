@@ -66,21 +66,25 @@ export default function PortfolioPage() {
           <AnimateOnScroll
             animation="slide-in-left"
             delay={0.3}
-            className="flex flex-wrap justify-center gap-2 mb-12"
+            className="mb-12"
           >
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                  activeCategory === cat
-                    ? "bg-[#153A5B] text-white"
-                    : "bg-white text-gray-600 hover:bg-gray-100"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+            <div className="overflow-x-auto pb-2 -mx-1">
+              <div className="flex justify-center gap-2 min-w-max px-1">
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveCategory(cat)}
+                    className={`flex-shrink-0 px-4 py-2 rounded-lg font-medium transition-all whitespace-nowrap ${
+                      activeCategory === cat
+                        ? "bg-[#153A5B] text-white"
+                        : "bg-white text-gray-600 hover:bg-gray-100"
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+            </div>
           </AnimateOnScroll>
 
           {loading ? (
