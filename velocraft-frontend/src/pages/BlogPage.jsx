@@ -10,6 +10,10 @@ export default function BlogPage() {
   const activeCategory = searchParams.get("category") || "All";
   const [allPosts, setAllPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isDesktop, setIsDesktop] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(min-width: 768px)").matches;
+  });
 
   useEffect(() => {
     let cancelled = false;
@@ -23,6 +27,14 @@ export default function BlogPage() {
     return () => {
       cancelled = true;
     };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(min-width: 768px)");
+    const update = (event) => setIsDesktop(event.matches);
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
   }, []);
 
   const categories = useMemo(() => {
@@ -74,26 +86,30 @@ export default function BlogPage() {
           <AnimateOnScroll
             animation="slide-in-right"
             delay={0.3}
-            className="flex flex-wrap justify-center gap-2 mb-12"
+            className="mb-12"
           >
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => handleCategoryChange(cat)}
-                className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                  activeCategory === cat
-                    ? "bg-[#153A5B] text-white"
-                    : "bg-white text-gray-600 hover:bg-gray-100"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+            <div className="overflow-x-auto pb-2 -mx-1">
+              <div className="flex justify-center gap-2 min-w-max px-1">
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => handleCategoryChange(cat)}
+                    className={`flex-shrink-0 px-4 py-2 rounded-lg font-medium transition-all whitespace-nowrap ${
+                      activeCategory === cat
+                        ? "bg-[#153A5B] text-white"
+                        : "bg-white text-gray-600 hover:bg-gray-100"
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+            </div>
           </AnimateOnScroll>
 
           {loading ? (
             <div className="text-center py-16 text-gray-500">Loading...</div>
-          ) : (
+          ) : isDesktop ? (
             <AnimateStagger
               key={activeCategory}
               animation="soft-zoom"
@@ -113,6 +129,21 @@ export default function BlogPage() {
                 />
               ))}
             </AnimateStagger>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {posts.map((post) => (
+                <BlogCard
+                  key={post.id}
+                  title={post.title}
+                  excerpt={post.excerpt}
+                  featuredImage={post.featuredImage}
+                  category={post.category}
+                  author={post.author}
+                  date={post.date}
+                  slug={post.slug}
+                />
+              ))}
+            </div>
           )}
 
           {!loading && posts.length === 0 && (

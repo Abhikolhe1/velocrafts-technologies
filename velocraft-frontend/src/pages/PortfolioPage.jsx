@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import CtaButton from "../components/CtaButton";
 import PortfolioCard from "../components/PortfolioCard";
 import AnimateOnScroll from "../components/AnimateOnScroll";
-import AnimateStagger from "../components/AnimateStagger";
 import { fetchPortfolios } from "../services/portfolioApi";
 
 export default function PortfolioPage() {
@@ -98,12 +97,7 @@ export default function PortfolioPage() {
               No projects to show.
             </div>
           ) : (
-            <AnimateStagger
-              key={activeCategory}
-              animation="lift-in"
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-10"
-              staggerDelay={0.2}
-            >
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
               {filteredProjects.map((project) => (
                 <PortfolioCard
                   key={project.id}
@@ -115,7 +109,7 @@ export default function PortfolioPage() {
                   image={project.image}
                 />
               ))}
-            </AnimateStagger>
+            </div>
           )}
         </div>
 
