@@ -16,6 +16,7 @@ export {ApplicationConfig};
 
 // Uploads stored outside public so they are not in git (see .gitignore)
 const STORAGE_PATH = path.resolve(process.cwd(), 'public/uploads');
+const PUBLIC_PATH = path.resolve(process.cwd(), 'public');
 
 export class VelocraftsApplication extends BootMixin(
   RepositoryMixin(RestApplication),
@@ -47,6 +48,7 @@ export class VelocraftsApplication extends BootMixin(
       path: '/explorer',
     });
     this.component(RestExplorerComponent);
+    this.static('/', PUBLIC_PATH);
 
     this.projectRoot = __dirname;
     // Customize @loopback/boot Booter Conventions here

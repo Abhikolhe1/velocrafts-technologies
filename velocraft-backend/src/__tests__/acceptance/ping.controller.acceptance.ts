@@ -18,4 +18,9 @@ describe('PingController', () => {
     const res = await client.get('/ping?msg=world').expect(200);
     expect(res.body).to.containEql({greeting: 'Hello from LoopBack'});
   });
+
+  it('serves the root page', async () => {
+    const res = await client.get('/').expect(200);
+    expect(res.text).to.containEql('<title>API backend for Velocrafts Technologies</title>');
+  });
 });
