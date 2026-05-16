@@ -5,7 +5,7 @@ export const projects = [
     title: 'ParkNTransit (Parktle)',
     image: '/assets/portfolio/parkntransit(parktle).png',
     shortDescription:
-      'Smart parking and shuttle management platform for airport and destination parking. Multi-role system with real-time GPS tracking and Flutter mobile apps for drivers and customers.',
+      'We built a seamless parking and shuttle experience for US travelers — connecting customers with nearby lots, live GPS tracking, and smooth ride flows for both drivers and passengers.',
     description:
       'ParkNTransit (also known as Parktle) is a US-based smart parking and shuttle management platform designed to simplify airport and destination parking for travelers. The platform connects customers with nearby parking lot owners and provides seamless shuttle services for pickup and drop-off between parking locations and destinations. Parking lot owners manage facilities, subscriptions, shuttle fleets, and bookings through a centralized web and mobile ecosystem. We developed a scalable multi-role platform consisting of React web dashboards and Flutter-powered mobile apps for customers and drivers, all connected via a unified LoopBack 4 backend.',
     challenge:
@@ -51,7 +51,7 @@ export const projects = [
     title: 'FanSeb',
     image: '/assets/portfolio/fanseb.png',
     shortDescription:
-      'Creator commerce and influencer marketing platform for beauty brands with reels-based product promotion and unified order operations.',
+      'A creator-first commerce platform where beauty brands and influencers collaborate, promote products through short videos, and manage everything from orders to payouts in one place.',
     description:
       'FanSeb is a digital commerce and marketing platform built for the beauty and cosmetics industry. It empowers creators and brands to collaborate, promote products through short-form video content, and manage sales through a centralized system. The platform includes dedicated dashboards for creators, brands, and administrators to streamline marketing, order processing, payouts, and operational visibility.',
     challenge:
@@ -62,10 +62,10 @@ export const projects = [
       'React.js',
       'LoopBack 4',
       'MySQL',
-      'KYC Verification APIs',
+      'KYC Verification',
       'Payment Gateway',
-      'Media Storage & CDN',
-      'Referral Network Engine',
+      'Media CDN',
+      'Referral Engine',
     ],
     category: 'SaaS',
     results: [
@@ -76,7 +76,7 @@ export const projects = [
       'Supported a multi-level referral growth model',
     ],
     client: 'FanSeb',
-    duration: 'Not publicly disclosed',
+    duration: 'Confidential',
     teamSize: 'Full Stack team',
     keyFeatures: [
       'Multi-role dashboards: Super Admin, Brand, Creator',
@@ -97,7 +97,7 @@ export const projects = [
     title: 'Bible Stories App',
     image: '/assets/portfolio/bibal-stories.png',
     shortDescription:
-      'Audio streaming and content management platform with an admin dashboard and Flutter listener app.',
+      'A peaceful audio storytelling app that brings faith-based content to listeners worldwide, with a simple admin panel for managing stories, notifications, and audience engagement.',
     description:
       'Bible Stories is a lightweight audio storytelling platform designed to deliver religious and inspirational content through a mobile application. The system includes an admin dashboard for content operations and a Flutter-based listener app for end users. Administrators can manage multilingual audio stories, track engagement, and communicate with listeners through custom notifications.',
     challenge:
@@ -107,12 +107,12 @@ export const projects = [
     technologies: [
       'React.js',
       'Node.js',
-      'LoopBack-based REST APIs',
+      'LoopBack 4',
       'MySQL',
       'Flutter',
-      'Push Notification Service',
-      'Audio Storage & Streaming',
-      'Analytics Engine',
+      'Push Notifications',
+      'Audio Streaming',
+      'Analytics',
     ],
     category: 'Mobile',
     results: [
@@ -123,7 +123,7 @@ export const projects = [
       'Provided smooth multilingual listening experience',
     ],
     client: 'Bible Stories',
-    duration: 'Not publicly disclosed',
+    duration: 'Confidential',
     teamSize: 'Full Stack & Mobile team',
     keyFeatures: [
       'Role-based system: Admin and Listener',
@@ -144,7 +144,7 @@ export const projects = [
     title: 'Altiv AI',
     image: '/assets/portfolio/altiv.png',
     shortDescription:
-      'AI-powered career intelligence and job aggregation platform helping professionals identify skill gaps and growth pathways.',
+      'An intelligent career companion that analyses your LinkedIn profile and resume to show exactly where your skills stand in the AI era — and what steps to take next.',
     description:
       'Altiv AI is an intelligent career development platform designed to help professionals overcome FOBO (Fear of Being Obsolete) in the fast-evolving AI-driven job market. The system analyzes LinkedIn profiles and resumes to generate personalized career reports, skill gap analysis, and growth recommendations. It combines AI insights, learning pathways, and job aggregation into one unified SaaS ecosystem.',
     challenge:
@@ -156,13 +156,13 @@ export const projects = [
       'Node.js',
       'LoopBack 4 APIs',
       'MySQL',
-      'Resume Parsing Engine',
-      'Profile Analysis System',
-      'Recommendation Algorithms',
+      'AI Resume Parsing',
+      'Profile Analysis',
+      'Recommendation Engine',
       'Stripe',
       'Razorpay',
-      'Job Aggregation Engine',
-      'CMS Management System',
+      'Job Aggregator',
+      'CMS',
     ],
     category: 'SaaS',
     results: [
@@ -173,7 +173,7 @@ export const projects = [
       'Delivered a scalable AI-driven career advisory platform',
     ],
     client: 'Altiv AI',
-    duration: 'Not publicly disclosed',
+    duration: 'Confidential',
     teamSize: 'Product, Full Stack & AI team',
     keyFeatures: [
       'AI-based FOBO (Fear of Being Obsolete) analysis',
@@ -194,7 +194,7 @@ export const projects = [
     title: 'DigiMicra',
     image: '/assets/portfolio/digimicra.png',
     shortDescription:
-      'Scalable multi-vendor e-commerce marketplace platform enabling businesses and sellers to onboard, manage, and grow online stores through vendor KYC, order processing, and unified commerce operations.',
+      'A full-featured marketplace where sellers onboard, list products, and grow their business — with vendor verification, checkout, payouts, and operations all handled in one place.',
     description:
       'DigiMicra is a scalable multi-vendor e-commerce marketplace platform that enables businesses and independent sellers to onboard, manage, and grow their online stores through a unified digital ecosystem. The platform supports multiple product categories, vendor KYC onboarding, and end-to-end commerce operations including sales, payments, logistics, and customer engagement. It combines advanced admin controls, vendor self-service dashboards, and a modern customer shopping experience.',
     challenge:
@@ -206,9 +206,9 @@ export const projects = [
       'NestJS',
       'MongoDB',
       'Payment Gateway',
-      'Inventory Management System',
-      'Media Storage & CDN',
-      'Notification & Email Services',
+      'Inventory Management',
+      'Media CDN',
+      'Email & Notifications',
     ],
     category: 'E-commerce',
     results: [
@@ -219,7 +219,7 @@ export const projects = [
       'Supported scalable marketplace growth',
     ],
     client: 'DigiMicra',
-    duration: 'Not publicly disclosed',
+    duration: 'Confidential',
     teamSize: 'Full Stack team',
     keyFeatures: [
       'Multi-role system: Admin, Vendor, Customer',
@@ -240,7 +240,7 @@ export const projects = [
     title: 'Altiv Extraction',
     image: '/assets/portfolio/altivextraction.png',
     shortDescription:
-      'Enterprise web scraping and ETL orchestration platform with visual workflow builder for configuring scraping logic, selectors, proxies, and transformation pipelines without code.',
+      'A no-code data extraction platform that lets teams build, schedule, and manage web scraping workflows visually — without writing a single line of code.',
     description:
       'Altiv Extraction is a complete scraping management and ETL orchestration platform designed to automate large-scale web data extraction processes. The system provides a visual workflow builder for configuring scraping logic, selectors, proxies, deduplication, and transformation pipelines — enabling non-technical administrators to manage complex scraping infrastructure from a centralized dashboard. The backend integrates scraping engines, proxy management, scheduling, orchestration, and logging systems into a unified, scalable architecture.',
     challenge:
@@ -265,7 +265,7 @@ export const projects = [
       'Scalable scraping infrastructure',
     ],
     client: 'Altiv Extraction',
-    duration: 'Not publicly disclosed',
+    duration: 'Confidential',
     teamSize: 'Full Stack & Data Engineering team',
     keyFeatures: [
       'Visual workflow builder (React Flow-based)',
@@ -287,7 +287,7 @@ export const projects = [
     title: 'Hylite',
     image: '/assets/portfolio/hylite.png',
     shortDescription:
-      'Industrial process management and ERP platform for galvanizing and metal processing companies with digital challan generation, production tracking, and role-based dashboards.',
+      'A digital operations platform that takes galvanizing and metal processing companies off paper — managing orders, production stages, challans, and billing from one central dashboard.',
     description:
       'Hylite is a comprehensive operations and workflow management platform developed for galvanizing and metal processing companies. The system digitizes end-to-end industrial processes — from customer enquiries and order intake to production tracking, billing, and delivery. It connects management teams and factory workers through role-based dashboards and mobile applications to ensure real-time visibility and operational efficiency.',
     challenge:
@@ -302,7 +302,7 @@ export const projects = [
       'MongoDB',
       'Flutter',
       'Notification System',
-      'Image & Document Storage',
+      'Document Storage',
     ],
     category: 'SaaS',
     results: [
@@ -314,7 +314,7 @@ export const projects = [
       'Enhanced client transparency',
     ],
     client: 'Hylite',
-    duration: 'Not publicly disclosed',
+    duration: 'Confidential',
     teamSize: 'Full Stack & Mobile team',
     keyFeatures: [
       'Multi-role access: Super Admin, Admin, Accounts, Supervisor, Worker, Customer',
@@ -338,7 +338,7 @@ export const projects = [
     title: 'IDP (Intelligent Document Processing)',
     image: '/assets/portfolio/IDP.png',
     shortDescription:
-      'AI-powered document automation platform for classifying, extracting, validating, and delivering data from large document volumes with visual pipeline and workflow builders.',
+      'An intelligent platform that reads, classifies, and processes thousands of documents automatically — so banks and enterprises spend less time on paperwork and more time making decisions.',
     description:
       'IDP is an enterprise-grade intelligent document processing and workflow automation platform designed to digitize, classify, extract, validate, and deliver data from large volumes of documents. The system combines AI-based document intelligence with a visual workflow builder and automation engine, enabling organizations to automate complex document-driven business processes. It supports banking, finance, and enterprise use cases such as loan applications, KYC forms, invoices, and contracts.',
     challenge:
@@ -354,7 +354,7 @@ export const projects = [
       'MongoDB',
       'Apache Airflow',
       'Docker',
-      'OCR & NLP Engines',
+      'OCR & NLP',
     ],
     category: 'AI/ML',
     results: [
@@ -366,7 +366,7 @@ export const projects = [
       'Supported banking & financial use cases',
     ],
     client: 'IDP Platform',
-    duration: 'Not publicly disclosed',
+    duration: 'Confidential',
     teamSize: 'Full Stack, AI & Data Engineering team',
     keyFeatures: [
       'Visual document pipeline builder (React Flow)',
@@ -390,7 +390,7 @@ export const projects = [
     title: 'Bonds Platform',
     image: '/assets/portfolio/bonds.png',
     shortDescription:
-      'Digital bond issuance and investment management platform for managing the complete lifecycle of bond issuance, compliance, trading, and investment across issuers, regulators, trustees, and investors.',
+      'A secure platform connecting bond issuers, regulators, and investors in one ecosystem — handling the full bond lifecycle from issuance and compliance to trading and reporting.',
     description:
       'Bonds is a comprehensive digital platform designed to manage the complete lifecycle of bond issuance, compliance, trading, and investment. The system connects issuers, regulators, trustees, rating agencies, and investors through role-based dashboards. It enables secure bond creation, AI-driven performance estimation, regulatory compliance, and secondary market trading in a unified ecosystem. We are building a centralized FinTech platform that automates bond creation, evaluation, compliance, and investment management.',
     challenge:
@@ -402,12 +402,12 @@ export const projects = [
       'Node.js',
       'MySQL',
       'MongoDB',
-      'Bond Performance Prediction Models',
-      'Financial Risk Analysis Engine',
-      'KYC & AML Integration',
+      'Bond AI Models',
+      'Financial Risk Analysis',
+      'KYC & AML',
       'Regulatory Rule Engine',
       'Payment Gateway',
-      'Notification & Alert System',
+      'Alerts & Notifications',
     ],
     category: 'SaaS',
     results: [

@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from './context/ThemeContext';
 import Layout from './components/Layout';
 import ScrollToTop from './components/ScrollToTop';
 import HomePage from './pages/HomePage';
@@ -13,6 +14,7 @@ import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
   return (
+    <ThemeProvider>
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
@@ -29,6 +31,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

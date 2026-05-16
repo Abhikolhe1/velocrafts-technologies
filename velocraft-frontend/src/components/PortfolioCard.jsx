@@ -10,14 +10,20 @@ export default function PortfolioCard({
 }) {
   return (
     <article
-      className={`group relative bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col ${
+      className={`group relative rounded-2xl overflow-hidden transition-all duration-300 flex flex-col ${
         compact ? "p-5" : "p-6"
       }`}
-      style={{ height: compact ? "480px" : "520px" }}
+      style={{
+        height: compact ? "480px" : "520px",
+        background: "var(--theme-surface)",
+        border: "1px solid var(--theme-border)",
+        boxShadow: "var(--theme-card-shadow)",
+      }}
     >
       <Link
         to={`/portfolio/${id}`}
-        className="flex-shrink-0 bg-gray-50 rounded-xl block"
+        className="shrink-0 rounded-xl block"
+        style={{ background: "var(--theme-surface-alt)" }}
       >
         <div className="aspect-video overflow-hidden rounded-lg">
           {image ? (
@@ -43,23 +49,28 @@ export default function PortfolioCard({
       <div
         className={`flex flex-col flex-1 min-h-0 ${compact ? "p-6" : "p-8"}`}
       >
-        <span className="text-xs font-semibold text-accent uppercase tracking-wider flex-shrink-0">
+        <span className="text-xs font-semibold text-accent uppercase tracking-wider shrink-0">
           {category}
         </span>
         <h3
-          className="text-xl font-semibold text-primary mt-2 mb-2 flex-shrink-0 line-clamp-2"
+          className="text-xl font-semibold mt-2 mb-2 shrink-0 line-clamp-2"
+          style={{ color: "var(--theme-text)" }}
           title={title}
         >
           {title}
         </h3>
         <div
-          className={`flex flex-wrap gap-2 flex-shrink-0 pr-1 ${compact ? "overflow-y-auto max-h-12" : "overflow-y-auto max-h-14"}`}
+          className={`flex flex-wrap gap-2 shrink-0 pr-1 ${compact ? "overflow-y-auto max-h-12" : "overflow-y-auto max-h-14"}`}
           title={technologies.join(", ")}
         >
           {technologies.map((tech) => (
             <span
               key={tech}
-              className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded"
+              className="px-2 py-1 text-xs rounded"
+              style={{
+                background: "var(--theme-border)",
+                color: "var(--theme-text-muted)",
+              }}
             >
               {tech}
             </span>
@@ -67,7 +78,8 @@ export default function PortfolioCard({
         </div>
         <Link
           to={`/portfolio/${id}`}
-          className="mt-auto pt-4 flex-shrink-0 inline-flex items-center text-accent font-medium hover:underline"
+          className="mt-auto pt-4 shrink-0 inline-flex items-center font-medium hover:underline"
+          style={{ color: "#818CF8" }}
         >
           View Details
           <svg

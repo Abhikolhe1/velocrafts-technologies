@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 /* Request Quote style: same look across navbar and all pages */
 const requestQuoteStyle =
-  'inline-block bg-accent text-primary font-semibold rounded-lg hover:bg-[#e6a200] transition-all duration-200 hover:scale-105';
+  'inline-block bg-accent text-primary font-semibold rounded-lg hover:bg-[#6366F1] transition-all duration-200 hover:scale-105';
 
 const variantStyles = {
   primary: `${requestQuoteStyle} px-8 py-4`,
@@ -11,7 +11,7 @@ const variantStyles = {
     'inline-block border-2 border-white text-white font-semibold px-8 py-4 rounded-lg hover:bg-white/10 transition-colors',
   link: 'inline-flex items-center text-accent font-semibold hover:underline',
   nav: `${requestQuoteStyle} px-5 py-2.5`,
-  navMobile: 'bg-accent text-primary font-semibold px-5 py-3 rounded-lg text-center block w-full hover:bg-[#e6a200] transition-all duration-200',
+  navMobile: 'bg-accent text-primary font-semibold px-5 py-3 rounded-lg text-center block w-full hover:bg-[#6366F1] transition-all duration-200',
 };
 
 const ArrowIcon = () => (

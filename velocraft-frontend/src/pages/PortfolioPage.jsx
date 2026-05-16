@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import CtaButton from "../components/CtaButton";
 import PortfolioCard from "../components/PortfolioCard";
 import AnimateOnScroll from "../components/AnimateOnScroll";
@@ -42,25 +41,44 @@ export default function PortfolioPage() {
 
   return (
     <>
-      <section className="pt-40 py-20" style={{ background: "#153A5B" }}>
+      <section
+        className="pt-40 py-20 relative overflow-hidden"
+        style={{ background: "var(--theme-surface-deep)" }}
+      >
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse at 50% 120%, rgba(129,140,248,0.12) 0%, transparent 60%)",
+          }}
+        />
         <AnimateOnScroll
           animation="blur-in"
           delay={0.2}
           threshold={0.01}
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+          className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
         >
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Portfolio & Studies
+            <h1
+              className="text-4xl md:text-5xl font-bold mb-4"
+              style={{ color: "var(--theme-text)" }}
+            >
+              Portfolio &amp; Studies
             </h1>
-            <p className="text-white/90 text-lg max-w-2xl mx-auto">
+            <p
+              className="text-lg max-w-2xl mx-auto"
+              style={{ color: "var(--theme-text-2)" }}
+            >
               Explore our recent projects and success stories across industries.
             </p>
           </div>
         </AnimateOnScroll>
       </section>
 
-      <section className="pt-12 pb-8 md:pt-16 md:pb-12 bg-gray-50">
+      <section
+        className="pt-12 pb-8 md:pt-16 md:pb-12"
+        style={{ background: "var(--theme-surface-alt)" }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimateOnScroll
             animation="slide-in-left"
@@ -73,11 +91,18 @@ export default function PortfolioPage() {
                   <button
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
-                    className={`flex-shrink-0 px-4 py-2 rounded-lg font-medium transition-all whitespace-nowrap ${
-                      activeCategory === cat
-                        ? "bg-[#153A5B] text-white"
-                        : "bg-white text-gray-600 hover:bg-gray-100"
+                    className={`shrink-0 px-4 py-2 rounded-lg font-medium transition-all whitespace-nowrap${
+                      activeCategory !== cat ? " hover-glass" : ""
                     }`}
+                    style={
+                      activeCategory === cat
+                        ? { background: "#818CF8", color: "#050816" }
+                        : {
+                            background: "var(--theme-surface)",
+                            color: "var(--theme-text-muted)",
+                            border: "1px solid var(--theme-border)",
+                          }
+                    }
                   >
                     {cat}
                   </button>
@@ -87,13 +112,19 @@ export default function PortfolioPage() {
           </AnimateOnScroll>
 
           {loading ? (
-            <div className="text-center py-16 text-gray-500">
+            <div
+              className="text-center py-16"
+              style={{ color: "var(--theme-text-muted)" }}
+            >
               Loading portfolio…
             </div>
           ) : error ? (
-            <div className="text-center py-16 text-red-600">{error}</div>
+            <div className="text-center py-16 text-red-500">{error}</div>
           ) : filteredProjects.length === 0 ? (
-            <div className="text-center py-16 text-gray-500">
+            <div
+              className="text-center py-16"
+              style={{ color: "var(--theme-text-muted)" }}
+            >
               No projects to show.
             </div>
           ) : (
@@ -113,12 +144,21 @@ export default function PortfolioPage() {
           )}
         </div>
 
-        <div className="mt-12 pt-12 border-t border-gray-200">
+        <div
+          className="mt-12 pt-12"
+          style={{ borderTop: "1px solid var(--theme-border)" }}
+        >
           <div className="text-center py-8">
-            <h3 className="text-xl font-semibold text-primary mb-2">
+            <h3
+              className="text-xl font-semibold mb-2"
+              style={{ color: "var(--theme-text)" }}
+            >
               Have a project in mind?
             </h3>
-            <p className="text-gray-600 mb-4 max-w-xl mx-auto">
+            <p
+              className="mb-4 max-w-xl mx-auto"
+              style={{ color: "var(--theme-text-muted)" }}
+            >
               Let&apos;s discuss how we can help bring your vision to life.
             </p>
             <CtaButton to="/contact" variant="primary">

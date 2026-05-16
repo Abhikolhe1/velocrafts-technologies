@@ -49,23 +49,32 @@ export default function BlogPostPage() {
 
   if (loading) {
     return (
-      <section className="pt-32 pb-20 min-h-screen flex items-center justify-center">
-        <div className="text-gray-500">Loading...</div>
+      <section
+        className="pt-32 pb-20 min-h-screen flex items-center justify-center"
+        style={{ background: "var(--theme-bg)" }}
+      >
+        <div style={{ color: "var(--theme-text-muted)" }}>Loading...</div>
       </section>
     );
   }
 
   if (!post) {
     return (
-      <section className="pt-32 pb-20 min-h-screen">
+      <section
+        className="pt-32 pb-20 min-h-screen"
+        style={{ background: "var(--theme-bg)" }}
+      >
         <div className="max-w-3xl mx-auto px-4 text-center">
-          <h1 className="text-2xl font-bold text-primary mb-4">
+          <h1
+            className="text-2xl font-bold mb-4"
+            style={{ color: "var(--theme-text)" }}
+          >
             Post not found
           </h1>
           <CtaButton to="/blog" variant="primary">
             <span className="inline-flex items-center gap-2">
               <Icon icon="heroicons:arrow-left" className="w-4 h-4" /> Back
-            </span>{" "}
+            </span>
           </CtaButton>
         </div>
       </section>
@@ -102,18 +111,23 @@ export default function BlogPostPage() {
 
   return (
     <>
-      {/* Hero / Header */}
+      {/* Hero */}
       <section
-        className="pt-32 pb-12"
-        style={{
-          background: "#153A5B",
-        }}
+        className="pt-32 pb-12 relative overflow-hidden"
+        style={{ background: "var(--theme-surface-deep)" }}
       >
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse at 50% 120%, rgba(129,140,248,0.12) 0%, transparent 60%)",
+          }}
+        />
         <AnimateOnScroll
           animation="blur-in"
           delay={0.2}
           threshold={0.01}
-          className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
+          className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
         >
           <CtaButton
             to="/blog"
@@ -122,16 +136,20 @@ export default function BlogPostPage() {
           >
             <span className="inline-flex items-center gap-2">
               <Icon icon="heroicons:arrow-left" className="w-4 h-4" /> Back
-            </span>{" "}
+            </span>
           </CtaButton>
-          <div className="flex flex-wrap items-center gap-2 text-sm text-white/80 mb-4">
+          <div
+            className="flex flex-wrap items-center gap-2 text-sm mb-4"
+            style={{ color: "var(--theme-text-muted)" }}
+          >
             <span>{post.author}</span>
             <span aria-hidden="true">|</span>
             <time dateTime={post.date}>{formattedDate}</time>
             <span aria-hidden="true">|</span>
             <Link
               to={`/blog?category=${encodeURIComponent(post.category)}`}
-              className="text-accent font-medium hover:underline"
+              className="font-medium hover:underline"
+              style={{ color: "#818CF8" }}
             >
               {post.category}
             </Link>
@@ -142,7 +160,10 @@ export default function BlogPostPage() {
               </>
             )}
           </div>
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
+          <h1
+            className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"
+            style={{ color: "var(--theme-text)" }}
+          >
             {post.title}
           </h1>
           {post.tags?.length > 0 && (
@@ -150,7 +171,12 @@ export default function BlogPostPage() {
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-3 py-1 rounded-full bg-white/10 text-white/90 text-sm"
+                  className="px-3 py-1 rounded-full text-sm"
+                  style={{
+                    background: "rgba(129,140,248,0.12)",
+                    color: "#818CF8",
+                    border: "1px solid rgba(129,140,248,0.2)",
+                  }}
                 >
                   {tag}
                 </span>
@@ -160,19 +186,31 @@ export default function BlogPostPage() {
         </AnimateOnScroll>
       </section>
 
-      <article className="py-12 md:py-16 bg-white">
+      <article
+        className="py-12 md:py-16"
+        style={{ background: "var(--theme-surface)" }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
-            {/* Sidebar: Table of Contents (sticky on desktop) */}
+            {/* Sidebar: Table of Contents */}
             {sections.length > 0 && (
-              <aside className="lg:w-64 flex-shrink-0 order-2 lg:order-1">
+              <aside className="lg:w-64 shrink-0 order-2 lg:order-1">
                 <AnimateOnScroll
                   animation="slide-in-right"
                   delay={0.3}
                   className="lg:sticky lg:top-28"
                 >
-                  <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
-                    <h3 className="text-sm font-semibold text-primary uppercase tracking-wider mb-4">
+                  <div
+                    className="rounded-xl p-6"
+                    style={{
+                      background: "var(--theme-surface-alt)",
+                      border: "1px solid var(--theme-border)",
+                    }}
+                  >
+                    <h3
+                      className="text-sm font-semibold uppercase tracking-wider mb-4"
+                      style={{ color: "var(--theme-text)" }}
+                    >
                       In this article
                     </h3>
                     <nav className="space-y-2 mb-6" aria-label="Table of contents">
@@ -180,47 +218,40 @@ export default function BlogPostPage() {
                         <a
                           key={i}
                           href={`#section-${i}`}
-                          className="block text-gray-600 hover:text-accent text-sm transition-colors"
+                          className="block text-sm transition-colors hover:text-accent"
+                          style={{ color: "var(--theme-text-muted)" }}
                         >
                           {section.heading}
                         </a>
                       ))}
                     </nav>
-                    <h3 className="text-sm font-semibold text-primary uppercase tracking-wider mb-3">
+                    <h3
+                      className="text-sm font-semibold uppercase tracking-wider mb-3"
+                      style={{ color: "var(--theme-text)" }}
+                    >
                       Share
                     </h3>
                     <div className="flex flex-wrap gap-2">
-                      <button
-                        onClick={() => handleShare("twitter")}
-                        className="p-2 rounded-lg bg-white border border-gray-200 hover:bg-gray-100 text-gray-600 hover:text-accent transition-colors"
-                        aria-label="Share on Twitter"
-                      >
-                        <Icon icon="ri:twitter-x-line" className="w-5 h-5" />
-                      </button>
-                      <button
-                        onClick={() => handleShare("linkedin")}
-                        className="p-2 rounded-lg bg-white border border-gray-200 hover:bg-gray-100 text-gray-600 hover:text-accent transition-colors"
-                        aria-label="Share on LinkedIn"
-                      >
-                        <Icon icon="mdi:linkedin" className="w-5 h-5" />
-                      </button>
-                      <button
-                        onClick={() => handleShare("facebook")}
-                        className="p-2 rounded-lg bg-white border border-gray-200 hover:bg-gray-100 text-gray-600 hover:text-accent transition-colors"
-                        aria-label="Share on Facebook"
-                      >
-                        <Icon icon="mdi:facebook" className="w-5 h-5" />
-                      </button>
-                      <button
-                        onClick={() => handleShare("copy")}
-                        className="p-2 rounded-lg bg-white border border-gray-200 hover:bg-gray-100 text-gray-600 hover:text-accent transition-colors"
-                        aria-label={copied ? "Copied" : "Copy link"}
-                      >
-                        <Icon
-                          icon={copied ? "mdi:check" : "mdi:content-copy"}
-                          className="w-5 h-5"
-                        />
-                      </button>
+                      {[
+                        { platform: "twitter", icon: "ri:twitter-x-line", label: "Share on Twitter" },
+                        { platform: "linkedin", icon: "mdi:linkedin", label: "Share on LinkedIn" },
+                        { platform: "facebook", icon: "mdi:facebook", label: "Share on Facebook" },
+                        { platform: "copy", icon: copied ? "mdi:check" : "mdi:content-copy", label: copied ? "Copied" : "Copy link" },
+                      ].map(({ platform, icon, label }) => (
+                        <button
+                          key={platform}
+                          onClick={() => handleShare(platform)}
+                          className="p-2 rounded-lg hover-glass transition-colors hover:text-accent"
+                          style={{
+                            background: "var(--theme-surface)",
+                            border: "1px solid var(--theme-border)",
+                            color: "var(--theme-text-muted)",
+                          }}
+                          aria-label={label}
+                        >
+                          <Icon icon={icon} className="w-5 h-5" />
+                        </button>
+                      ))}
                     </div>
                   </div>
                 </AnimateOnScroll>
@@ -235,7 +266,10 @@ export default function BlogPostPage() {
                 className="prose prose-lg max-w-none"
               >
                 {post.featuredImage ? (
-                  <div className="aspect-video rounded-xl mb-10 overflow-hidden bg-gray-100">
+                  <div
+                    className="aspect-video rounded-xl mb-10 overflow-hidden"
+                    style={{ background: "var(--theme-surface-alt)" }}
+                  >
                     <img
                       src={post.featuredImage}
                       alt={post.title}
@@ -243,9 +277,13 @@ export default function BlogPostPage() {
                     />
                   </div>
                 ) : (
-                  <div className="aspect-video bg-gradient-to-br from-primary/10 to-secondary/10 rounded-xl mb-10 flex items-center justify-center">
+                  <div
+                    className="aspect-video rounded-xl mb-10 flex items-center justify-center"
+                    style={{ background: "var(--theme-surface-alt)" }}
+                  >
                     <svg
-                      className="w-20 h-20 text-primary/30"
+                      className="w-20 h-20"
+                      style={{ color: "var(--theme-text-muted)", opacity: 0.3 }}
                       fill="currentColor"
                       viewBox="0 0 24 24"
                       aria-hidden="true"
@@ -255,20 +293,42 @@ export default function BlogPostPage() {
                   </div>
                 )}
 
-                <p className="text-lg text-gray-600 leading-relaxed mb-10">
+                <p
+                  className="text-lg leading-relaxed mb-10"
+                  style={{ color: "var(--theme-text-muted)" }}
+                >
                   {post.content.intro}
                 </p>
 
-                {/* Key points highlight box */}
+                {/* Key points */}
                 {post.keyPoints?.length > 0 && (
-                  <div className="mb-12 p-6 md:p-8 rounded-xl bg-primary/5 border-l-4 border-accent">
-                    <h3 className="text-lg font-semibold text-primary mb-4">
+                  <div
+                    className="mb-12 p-6 md:p-8 rounded-xl"
+                    style={{
+                      background: "var(--theme-surface-subtle)",
+                      borderLeft: "4px solid #818CF8",
+                    }}
+                  >
+                    <h3
+                      className="text-lg font-semibold mb-4"
+                      style={{ color: "var(--theme-text)" }}
+                    >
                       Key takeaways
                     </h3>
-                    <ul className="space-y-3 text-gray-700">
+                    <ul className="space-y-3">
                       {post.keyPoints.map((point, i) => (
-                        <li key={i} className="flex gap-3">
-                          <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent/20 text-accent flex items-center justify-center text-sm font-medium">
+                        <li
+                          key={i}
+                          className="flex gap-3"
+                          style={{ color: "var(--theme-text-muted)" }}
+                        >
+                          <span
+                            className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-sm font-medium"
+                            style={{
+                              background: "rgba(129,140,248,0.15)",
+                              color: "#818CF8",
+                            }}
+                          >
                             {i + 1}
                           </span>
                           <span>{point}</span>
@@ -281,17 +341,20 @@ export default function BlogPostPage() {
                 {/* Article sections */}
                 <div className="space-y-10">
                   {sections.map((section, i) => (
-                    <section
-                      key={i}
-                      id={`section-${i}`}
-                      className="scroll-mt-32"
-                    >
-                      <h2 className="text-2xl font-semibold text-primary mt-12 mb-6">
+                    <section key={i} id={`section-${i}`} className="scroll-mt-32">
+                      <h2
+                        className="text-2xl font-semibold mt-12 mb-6"
+                        style={{ color: "var(--theme-text)" }}
+                      >
                         {section.heading}
                       </h2>
                       <div className="space-y-5">
                         {section.paragraphs?.map((p, j) => (
-                          <p key={j} className="text-gray-600 leading-relaxed">
+                          <p
+                            key={j}
+                            className="leading-relaxed"
+                            style={{ color: "var(--theme-text-muted)" }}
+                          >
                             {p}
                           </p>
                         ))}
@@ -300,37 +363,73 @@ export default function BlogPostPage() {
                   ))}
                 </div>
 
-                {/* Quote block */}
+                {/* Quote */}
                 {post.quote && (
-                  <blockquote className="my-12 pl-6 border-l-4 border-accent text-xl text-gray-700 italic">
+                  <blockquote
+                    className="my-12 pl-6 text-xl italic"
+                    style={{
+                      borderLeft: "4px solid #818CF8",
+                      color: "var(--theme-text-2)",
+                    }}
+                  >
                     &ldquo;{post.quote}&rdquo;
                   </blockquote>
                 )}
 
                 {/* Author bio */}
                 {post.authorBio && (
-                  <div className="mt-12 p-6 md:p-8 rounded-xl bg-gray-50 border border-gray-100">
-                    <h3 className="text-lg font-semibold text-primary mb-2">
+                  <div
+                    className="mt-12 p-6 md:p-8 rounded-xl"
+                    style={{
+                      background: "var(--theme-surface-alt)",
+                      border: "1px solid var(--theme-border)",
+                    }}
+                  >
+                    <h3
+                      className="text-lg font-semibold mb-2"
+                      style={{ color: "var(--theme-text)" }}
+                    >
                       About the author
                     </h3>
-                    <p className="text-gray-600 leading-relaxed">
+                    <p
+                      className="leading-relaxed"
+                      style={{ color: "var(--theme-text-muted)" }}
+                    >
                       {post.authorBio}
                     </p>
                   </div>
                 )}
 
                 {/* CTA */}
-                <div className="mt-12 p-6 md:p-8 bg-[#153A5B] rounded-xl text-white">
-                  <h3 className="text-xl font-semibold mb-2">
-                    Have questions?
-                  </h3>
-                  <p className="text-white/90 mb-4">
-                    Get in touch with our team to discuss how we can help your
-                    business grow.
-                  </p>
-                  <CtaButton to="/contact" variant="primary" compact>
-                    Contact Us
-                  </CtaButton>
+                <div
+                  className="mt-12 p-6 md:p-8 rounded-xl relative overflow-hidden"
+                  style={{ background: "var(--theme-surface-deep)" }}
+                >
+                  <div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{
+                      background:
+                        "radial-gradient(ellipse at 0% 50%, rgba(129,140,248,0.1) 0%, transparent 60%)",
+                    }}
+                  />
+                  <div className="relative z-10">
+                    <h3
+                      className="text-xl font-semibold mb-2"
+                      style={{ color: "var(--theme-text)" }}
+                    >
+                      Have questions?
+                    </h3>
+                    <p
+                      className="mb-4"
+                      style={{ color: "var(--theme-text-muted)" }}
+                    >
+                      Get in touch with our team to discuss how we can help your
+                      business grow.
+                    </p>
+                    <CtaButton to="/contact" variant="primary" compact>
+                      Contact Us
+                    </CtaButton>
+                  </div>
                 </div>
               </AnimateOnScroll>
             </div>
@@ -338,9 +437,15 @@ export default function BlogPostPage() {
 
           {/* Related posts */}
           {relatedPosts?.length > 0 && (
-            <section className="mt-20 pt-16 border-t border-gray-200">
+            <section
+              className="mt-20 pt-16"
+              style={{ borderTop: "1px solid var(--theme-border)" }}
+            >
               <AnimateOnScroll animation="slide-in-up" delay={0.2}>
-                <h2 className="text-2xl md:text-3xl font-bold text-primary mb-8">
+                <h2
+                  className="text-2xl md:text-3xl font-bold mb-8"
+                  style={{ color: "var(--theme-text)" }}
+                >
                   Related articles
                 </h2>
                 <AnimateStagger
@@ -348,7 +453,7 @@ export default function BlogPostPage() {
                   className="grid md:grid-cols-3 gap-8"
                   staggerDelay={0.15}
                 >
-                  {(relatedPosts ?? []).map((p) => (
+                  {relatedPosts.map((p) => (
                     <BlogCard
                       key={p.id}
                       title={p.title}

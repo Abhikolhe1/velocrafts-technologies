@@ -2,20 +2,66 @@
 @import "tailwindcss";
 
 @theme {
-  /* Velocrafts Technologies Color Palette - Updated Dark Theme */
-  --color-primary: #0a0e27;
-  --color-secondary: #16213e;
-  --color-tertiary: #1a1f3a;
-  --color-accent: #FFB400;
-  --color-accent-hover: #e6a200;
-  
+  /* Velocrafts Technologies — Deep Dark Theme */
+  --color-primary: #050816;
+  --color-secondary: #0d1020;
+  --color-tertiary: #141830;
+  --color-accent: #818CF8;
+  --color-accent-hover: #6366F1;
+
   /* Typography */
   --font-sans: "Poppins", system-ui, sans-serif;
 }
 
+/* ── Theme CSS variables ── */
+:root {
+  --theme-bg: #050816;
+  --theme-surface: #0d1020;
+  --theme-surface-alt: #0a0d1a;
+  --theme-surface-deep: #070b18;
+  --theme-surface-subtle: rgba(255,255,255,0.03);
+  --theme-terminal: #080c18;
+  --theme-terminal-bar: #0a0e1a;
+  --theme-text: #e8eaf0;
+  --theme-text-2: #c8cde0;
+  --theme-text-muted: #9ca3af;
+  --theme-border: rgba(255,255,255,0.05);
+  --theme-border-sm: rgba(255,255,255,0.04);
+  --theme-border-md: rgba(255,255,255,0.08);
+  --theme-dot: rgba(255,255,255,0.2);
+  --theme-scroll-track: rgba(255,255,255,0.06);
+  --theme-svc-num: rgba(255,255,255,0.12);
+  --theme-card-shadow: none;
+  --theme-card-shadow-md: none;
+  --theme-hover-bg: rgba(255,255,255,0.05);
+  --theme-img-overlay: linear-gradient(to bottom, transparent 30%, rgba(5,8,22,0.97));
+}
+
+[data-theme="light"] {
+  --theme-bg: #f4f6ff;
+  --theme-surface: #ffffff;
+  --theme-surface-alt: #eef0fc;
+  --theme-surface-deep: #e6e9f8;
+  --theme-surface-subtle: rgba(99,102,241,0.04);
+  /* terminal stays dark in light mode */
+  --theme-text: #0d0f1c;
+  --theme-text-2: #3b4058;
+  --theme-text-muted: #6b7280;
+  --theme-border: rgba(0,0,0,0.07);
+  --theme-border-sm: rgba(0,0,0,0.05);
+  --theme-border-md: rgba(0,0,0,0.11);
+  --theme-dot: rgba(0,0,0,0.15);
+  --theme-scroll-track: rgba(0,0,0,0.1);
+  --theme-svc-num: rgba(0,0,0,0.1);
+  --theme-card-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 20px rgba(99,102,241,0.05);
+  --theme-card-shadow-md: 0 2px 8px rgba(0,0,0,0.07), 0 8px 32px rgba(99,102,241,0.08);
+  --theme-hover-bg: rgba(0,0,0,0.04);
+  --theme-img-overlay: linear-gradient(to bottom, transparent 20%, rgba(10,15,50,0.88));
+}
+
 html {
   scroll-behavior: smooth;
-  font-size: 18px; /* +2px from default 16px */
+  font-size: 18px;
   overflow-x: hidden;
 }
 
@@ -25,9 +71,61 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  background: var(--theme-bg);
+  color: var(--theme-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Scroll-triggered animations - subtle, professional (Apple/Stripe-style) */
+/* ── Hover utility (theme-aware) ── */
+.hover-glass:hover {
+  background-color: var(--theme-hover-bg) !important;
+}
+
+/* ── GSAP hero keyframes ── */
+@keyframes heroWordIn {
+  from {
+    transform: translateY(110%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scrollDrop {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(200%);
+    opacity: 0;
+  }
+}
+
+/* ── Hero tech ticker ── */
+@keyframes heroBelt {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.hero-ticker {
+  animation: heroBelt 28s linear infinite;
+  will-change: transform;
+  display: flex;
+  white-space: nowrap;
+}
+.hero-ticker:hover {
+  animation-play-state: paused;
+}
+
+/* ── Legacy CSS scroll animations (kept for other pages) ── */
 .scroll-animate {
   opacity: 0;
   animation-fill-mode: forwards;
@@ -56,81 +154,39 @@ body {
   animation-name: scrollFadeUpSubtle;
 }
 
-/* Gentle fade + 12px up - for headings */
 @keyframes scrollFadeUpSubtle {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Fade + 20px up - for text blocks */
 @keyframes scrollFadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes scrollFadeIn {
   from { opacity: 0; }
-  to { opacity: 1; }
+  to   { opacity: 1; }
 }
 
-/* Cards slide from left - 24px */
 @keyframes scrollSlideLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(-24px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
-/* Cards slide from right - 24px */
 @keyframes scrollSlideRight {
-  from {
-    opacity: 0;
-    transform: translateX(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
-/* Subtle scale + fade - premium card feel */
 @keyframes scrollScaleUp {
-  from {
-    opacity: 0;
-    transform: scale(0.97);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
-/* Zoom in - for impact sections */
 @keyframes scrollZoomIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -140,9 +196,12 @@ body {
     animation: none;
     transform: none;
   }
+  .hero-ticker {
+    animation: none;
+  }
 }
 
-/* Thin scrollbar for card overflow */
+/* ── Thin scrollbar ── */
 .overflow-y-auto::-webkit-scrollbar {
   width: 4px;
 }
@@ -150,9 +209,9 @@ body {
   background: transparent;
 }
 .overflow-y-auto::-webkit-scrollbar-thumb {
-  background: #d1d5db;
+  background: #2a2e40;
   border-radius: 4px;
 }
 .overflow-y-auto::-webkit-scrollbar-thumb:hover {
-  background: #9ca3af;
+  background: #3a3e55;
 }
